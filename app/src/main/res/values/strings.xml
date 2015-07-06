@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">BulletinGroupBlast</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="title_section1">Home of God Church</string>
+    <string name="title_section2">Portland State</string>
+    <string name="title_section3">Programmers Guild</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="title_activity_home_main">Home</string>
 </resources>
