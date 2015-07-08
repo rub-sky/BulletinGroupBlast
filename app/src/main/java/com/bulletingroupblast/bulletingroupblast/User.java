@@ -10,6 +10,8 @@ package com.bulletingroupblast.bulletingroupblast;
  */
 
 //import com.google.common.base.Strings;
+import android.media.Image;
+
 import com.bulletingroupblast.bulletingroupblast.Organization;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -23,6 +25,7 @@ public class User {
     protected boolean isActive;
     protected boolean isAdmin;
     protected Date dateCreated;
+    protected Image avatar;
     private final int PASSWORD_MIN_LENGTH = 8;
     private final int PASSWORD_MAX_LENGTH = 64;
 
@@ -46,6 +49,7 @@ public class User {
 
         isActive = true;
         isAdmin = true;
+        /*TODO: populate avatar image*/
 
         dateCreated = new Date();
 

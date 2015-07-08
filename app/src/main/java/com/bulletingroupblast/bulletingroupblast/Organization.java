@@ -81,7 +81,8 @@ public class Organization {
         return success;
     }
 
-    // Gets the admin
+    // Gets the admin user
+    // Takes in Nothing
     // Returns a User object
     public User getAdmin() {
         return admin;
@@ -89,10 +90,23 @@ public class Organization {
 
     // Sets the organization admin
     // Takes in a User object
+    // Returns nothing
     public void setAdmin(User admin) {
         // Send notification to current admin
         this.admin = admin;
     }
 
+    // Gets the organization name
+    // Takes in Nothing
+    // Returns a string
+    public String getName() {
+        return name;
+    }
 
+    // Sets the organization name
+    // Takes in a name string
+    // Returns nothing
+    public void setName(String name) {
+        this.name = name;
+    }
 }

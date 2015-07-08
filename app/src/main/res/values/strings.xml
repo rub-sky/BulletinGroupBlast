@@ -15,4 +15,5 @@
 
     <string name="action_example">Example action</string>
     <string name="title_activity_home_main">Home</string>
+    <string name="title_activity_user_landing">UserLandingActivity</string>
 </resources>
