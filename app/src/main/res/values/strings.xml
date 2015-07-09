@@ -14,6 +14,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
-    <string name="title_activity_home_main">Home</string>
-    <string name="title_activity_user_landing">UserLandingActivity</string>
+    <string name="title_activity_user_landing">Home</string>
+    <string name="title_activity_organization">Organization</string>
 </resources>

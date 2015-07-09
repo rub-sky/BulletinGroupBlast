@@ -21,11 +21,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
+import android.content.Intent;
 
 import java.util.ArrayList;
 
 
 public class UserLandingActivity extends ActionBarActivity {
+    public final static String EXTRA_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.OrganizationActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +49,23 @@ public class UserLandingActivity extends ActionBarActivity {
         listItems.add(testOrg3.getName());
         listItems.add(testOrg4.getName());
 
-        ListView orgListView = (ListView) findViewById(R.id.lstOrganizations);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);
 
-        orgListView.setAdapter(adapter);
+        final ListView orgListView = (ListView) findViewById(R.id.lstOrganizations); // ListView reference
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
+
+        orgListView.setAdapter(adapter);        // Attach the adapter to the listView
+        // Attach an on click event to the list
         orgListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
+                // Show a message
+//                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
+                onListItemClick(orgListView, view, position,id);
             }
         });
 
-        final TextView textViewToChange = (TextView) findViewById(R.id.lblUserEmail);
-        textViewToChange.setText(testUser.getEmail());
+        TextView textViewToChange = (TextView) findViewById(R.id.lblUserEmail);   // This is a reference to the email text box
+        textViewToChange.setText(testUser.getEmail());  // Change the email to what I want
     }
 
     @Override
@@ -74,13 +80,27 @@ public class UserLandingActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int itemId = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (itemId == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    protected void onListItemClick(ListView lv, View v, int position, long id) {
+        // Move to another activity
+        try {
+            Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.OrganizationActivity.class);     // Intent is for switching to a different activity
+            String message = "Organization: " + lv.getItemAtPosition(position);
+            intent.putExtra(EXTRA_MESSAGE, message);        // Adds the text value to the intent
+            startActivity(intent);
+        }
+        catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show(); // Show a message in toast
+        }
+    }
+
 }
