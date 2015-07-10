@@ -13,12 +13,19 @@ import com.bulletingroupblast.bulletingroupblast.Group;
 import com.bulletingroupblast.bulletingroupblast.User;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 public class Organization {
     protected String name;
     protected String description;
     protected User admin;
     protected Date createdDate;
+    protected String address1;
+    protected String address2;
+    protected String city;
+    protected String state;
+    protected String zipCode;
+    protected String websiteLink;
 
 
     ArrayList<Group> groupList = new ArrayList<Group>();
@@ -49,6 +56,12 @@ public class Organization {
 //        else {
             //Throw exception
 //        }
+
+        address1 = new String();
+        address2 = new String();
+        city = new String();
+        state = new String();
+        zipCode = new String();
 
         createdDate = new Date();
     }
