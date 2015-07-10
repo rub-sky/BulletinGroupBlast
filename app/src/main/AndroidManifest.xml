@@ -32,15 +32,18 @@
             android:label="@string/title_activity_user_landing" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.PICK" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -51,6 +54,26 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bulletingroupblast.bulletingroupblast.UserLandingActivity" />
+        </activity>
+        <activity
+            android:name=".CreateUserAccountActivity"
+            android:label="@string/title_activity_create_user_account" >
+        </activity>
+        <activity
+            android:name=".CreateOrganizationActivity"
+            android:label="@string/title_activity_create_organization"
+            android:parentActivityName=".UserLandingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bulletingroupblast.bulletingroupblast.UserLandingActivity" />
+        </activity>
+        <activity
+            android:name=".CreateGroupActivity"
+            android:label="@string/title_activity_create_group"
+            android:parentActivityName=".OrganizationActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bulletingroupblast.bulletingroupblast.OrganizationActivity" />
         </activity>
     </application>
 
