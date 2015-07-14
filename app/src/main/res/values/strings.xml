@@ -19,4 +19,5 @@
     <string name="title_activity_create_user_account">Create User Account</string>
     <string name="title_activity_create_organization">Create Organization</string>
     <string name="title_activity_create_group">Create Group</string>
+    <string name="txtonClickCreateNewUser">onClickCreateNewUser</string>
 </resources>

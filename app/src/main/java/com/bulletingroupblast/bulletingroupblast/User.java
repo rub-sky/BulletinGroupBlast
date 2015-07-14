@@ -1,5 +1,3 @@
-package com.bulletingroupblast.bulletingroupblast;
-
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
@@ -8,6 +6,8 @@ package com.bulletingroupblast.bulletingroupblast;
  * <p>
  * Created by Ruben Piatnitsky on 7/6/15.
  */
+
+package com.bulletingroupblast.bulletingroupblast;
 
 //import com.google.common.base.Strings;
 import android.media.Image;
@@ -40,18 +40,18 @@ public class User {
         email = user_email;
 
         if (checkStringValue(fName)) {
-            firstName = fName;
+            this.firstName = fName;
         }
 
         if (checkStringValue(lName)) {
-            lastName = lName;
+            this.lastName = lName;
         }
 
-        isActive = true;
-        isAdmin = true;
+        this.isActive = true;
+        this.isAdmin = true;
         /*TODO: populate avatar image*/
 
-        dateCreated = new Date();
+        this.dateCreated = new Date();
 
         setPassword(user_password);     // Set the user password
 
@@ -65,7 +65,7 @@ public class User {
 
         if (checkStringValue(newPassword)) {
             if (newPassword.length() >= PASSWORD_MIN_LENGTH || newPassword.length() <= PASSWORD_MAX_LENGTH) {
-                password = newPassword;
+                this.password = newPassword;
                 success = true;
             }
         }
@@ -80,7 +80,7 @@ public class User {
         boolean success = false;
 
         if (newOrganization != null) {
-            organizationList.add(newOrganization);
+            this.organizationList.add(newOrganization);
             success = true;
         }
 
@@ -91,7 +91,7 @@ public class User {
     // Takes in nothing
     // Returns firstName as string
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     // Set function for first name field
@@ -105,7 +105,7 @@ public class User {
     // Takes in nothing
     // Returns lastName
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     // Set function for first name field
@@ -119,7 +119,7 @@ public class User {
     // Takes in email string
     // Returns nothing
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     // Set function for  field
@@ -139,5 +139,52 @@ public class User {
         }
 
         return success;
+    }
+
+    // This function updates the current user info in the database
+    // It takes in nothing
+    // It returns a boolean value - true if successful and false otherwise
+    public boolean Update() {
+        boolean result = false;
+        /*TODO: Generate an UPDATE statement*/
+
+        return result;
+    }
+
+    // This function inserts the current user into the database
+    // It takes in nothing
+    // It returns a boolean value - true if successful and false otherwise
+    public boolean Insert() {
+        boolean result = false;
+        /*TODO: Generate an INSERT statement*/
+
+        return result;
+    }
+
+    // This function deletes the current user from the database and initializes the variables
+    // It takes in nothing
+    // It returns a boolean value - true if successful and false otherwise
+    public boolean Delete() {
+        boolean result = false;
+        /*TODO: Generate an DELETE statement*/
+
+        return result;
+    }
+
+    // This function sends the user a confirmation email
+    // It takes in nothing
+    // It returns a boolean value - true if message sent and false otherwise
+    public boolean SendConfirmation() {
+        boolean result = false;
+
+        try {
+            /*TODO: Generate an Email to be sent*/
+
+        } catch (Exception e) {
+            /*TODO: Log the error*/
+            /*TODO: Redirect*/
+        }
+
+        return result;
     }
 }
