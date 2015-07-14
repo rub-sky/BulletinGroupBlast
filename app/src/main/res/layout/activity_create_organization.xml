@@ -40,7 +40,8 @@
         android:layout_alignParentBottom="false"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:inputType="textPostalAddress" />
 
     <EditText
         android:layout_width="match_parent"
@@ -49,7 +50,8 @@
         android:layout_alignParentStart="true"
         android:text="Address Line 2"
         android:layout_below="@+id/txtAddress1"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:inputType="textPostalAddress" />
 
     <EditText
         android:layout_width="match_parent"
@@ -58,7 +60,8 @@
         android:layout_alignParentStart="true"
         android:text="City"
         android:layout_below="@+id/txtAddress2"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:inputType="textPostalAddress" />
 
     <EditText
         android:layout_width="match_parent"
@@ -67,7 +70,8 @@
         android:text="State"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtCity"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:inputType="textCapCharacters" />
 
     <EditText
         android:layout_width="match_parent"
@@ -76,7 +80,8 @@
         android:text="Zip Code"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtState"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:inputType="number|textPostalAddress" />
 
     <EditText
         android:layout_width="match_parent"
@@ -86,7 +91,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtZipCode"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:inputType="textWebEditText" />
 
     <TextView
         android:layout_width="wrap_content"
