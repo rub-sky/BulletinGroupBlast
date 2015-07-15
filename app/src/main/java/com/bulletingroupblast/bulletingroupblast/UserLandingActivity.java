@@ -50,7 +50,7 @@ public class UserLandingActivity extends ActionBarActivity {
         listItems.add(testOrg4.getName());
 
 
-        final ListView orgListView = (ListView) findViewById(R.id.lstOrganizations); // ListView reference
+        ListView orgListView = (ListView) findViewById(R.id.lstOrganizations); // ListView reference
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
 
         orgListView.setAdapter(adapter);        // Attach the adapter to the listView
@@ -60,7 +60,7 @@ public class UserLandingActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Show a message
 //                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
-                onListItemClick(orgListView, view, position,id);
+//                onListItemClick(parent.orgListView, view, position,id);
             }
         });
 

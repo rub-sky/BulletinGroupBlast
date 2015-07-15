@@ -122,7 +122,8 @@ public class CreateUserAccountActivity extends ActionBarActivity {
             if (!txtValuesNotValid) {
                 // Create a new User object
                 newUser = new User(FName, LName, Email, Password);
-                newUser.Save();
+                String qryUpdateUser = newUser.UpdateString();
+
                 newUser.SendConfirmation();
 
                 result = true;      // success
