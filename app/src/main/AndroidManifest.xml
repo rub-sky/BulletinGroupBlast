@@ -57,7 +57,11 @@
         </activity>
         <activity
             android:name=".CreateUserAccountActivity"
-            android:label="@string/title_activity_create_user_account" >
+            android:label="@string/title_activity_create_user_account"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bulletingroupblast.bulletingroupblast.MainActivity" />
         </activity>
         <activity
             android:name=".CreateOrganizationActivity"

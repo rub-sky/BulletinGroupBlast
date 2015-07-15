@@ -34,13 +34,21 @@ public class UserLandingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_landing);
 
+        User testUser;
+        Intent intentPrev = getIntent();
+        int passedUserId = intentPrev.getIntExtra(MainActivity.USERID_MESSAGE, 0);
+
         // Test Data created for interface dev
-        User testUser = new User("ruben@gmail.com", "password", "Ruben", "Piatnitsky");
+        if (passedUserId == 0) {
+            testUser = new User("test.test@gmail.com", "password", "Test", "User");
+        } else {
+            testUser = new User("John.Doe@gmail.com","password","John", "Doe");
+        }
+
         Organization testOrg1 = new Organization("Portland State University", "A description", testUser);
         Organization testOrg2 = new Organization("Vancouver Lego Guild", "A description", testUser);
         Organization testOrg3 = new Organization("Smashing Car Show", "A description", testUser);
         Organization testOrg4 = new Organization("Biker Gang", "A description", testUser);
-
 
         // Creating a list view object that refers to the list view on the page
         ArrayList<String> listItems = new ArrayList<String>();

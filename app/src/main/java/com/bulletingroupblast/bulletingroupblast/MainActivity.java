@@ -23,28 +23,27 @@ public class MainActivity extends Activity {
     private Intent intentNewUser;
     private Intent intentSignIn;
     private Intent intentUserLanding;
+    public final static String USERID_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        int dataAvailable = LoadLocalData();  //Check for local Data
 
         try {
-            Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
-            intentUserLanding.putExtra("com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity", userAccount.getUserId());        // Adds the text value to the intent
-            startActivity(intentUserLanding);
-            //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
+            switch (dataAvailable) {
+                case -1:
+                    goToCreateNewUserAccount(); // Data Error
+                    break;
+                case 1:
+                    goToUserLanding();          // Log user in automatically
+                    break;
+                default:
+                    goToUserLogin();            // Go to Login page none
+                    break;
+            }
 
-            //Check for local Data
-        /*TODO: Load User if one exists locally*/
-
-        /*TODO: Log in user automatically if user has logged in before*/
-            Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateUserAccountActivity.class);     // Intent is for switching to a different activity
-            startActivity(intentNewUser);
-
-        /*TODO: Redirect new User to Create a New User Activity if no user exists*/
-            Intent intentNewUser = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateUserAccountActivity.class);     // Intent is for switching to a different activity
-            startActivity(intentNewUser);
         } catch (Exception e) {
             /*TODO: Error Log entry*/
         }
@@ -68,8 +67,10 @@ public class MainActivity extends Activity {
         int result = 0;
 
         try {
-        /*TODO: Check the local data stored on device*/
-            result = 0;
+            /*TODO: Check the local data stored on device*/
+            /*TODO: Load User if one exists locally*/
+            userAccount = new User("John.Doe@gmail.com","password","John", "Doe");
+            //result = 0;
             result = 1;
         } catch (Exception e) {
             /*TODO: Write to Error Log*/
@@ -77,5 +78,37 @@ public class MainActivity extends Activity {
         }
 
         return result;
+    }
+
+    /**
+     * @apiNote Opens the User Landing activity for the user
+     */
+    private void goToUserLanding() {
+        Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
+        intentUserLanding.putExtra(USERID_MESSAGE, userAccount.getUserId());        // Adds the text value to the intent
+        startActivity(intentUserLanding);
+        //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
+    }
+
+    /**
+     * @apiNote Checks if the user needs to enter credentials or not nd redirects them to login or landing page
+     */
+    private void goToUserLogin() {
+        if (userAccount.getAutoLogin()) {
+            goToUserLanding();  // Send the user to the landing page
+        } else {
+            // Send the user to the login page
+            Intent intentSignIn = new Intent(this, com.bulletingroupblast.bulletingroupblast.LoginActivity.class);
+            startActivity(intentSignIn);
+        }
+    }
+
+    /**
+     * @apitNote Redirecting to create a new user account activity
+     */
+    private void goToCreateNewUserAccount() {
+        // Send the user to create a new user account
+        Intent intentNewUser = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateUserAccountActivity.class);
+        startActivity(intentNewUser);
     }
 }
