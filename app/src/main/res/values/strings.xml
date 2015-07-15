@@ -22,4 +22,9 @@
     <string name="txtonClickCreateNewUser">onClickCreateNewUser</string>
 
     <string name="loading">Loading</string>
+    <string name="LBL_FNAME">First Name</string>
+    <string name="LBL_LNAME">Last Name</string>
+    <string name="LBL_EMAIL">Email</string>
+    <string name="LBL_PASSWORD">Password</string>
+    <string name="LBL_PASSWORD_CONFIRM">Confirm Password</string>
 </resources>

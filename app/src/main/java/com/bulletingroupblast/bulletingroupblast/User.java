@@ -25,6 +25,7 @@ public class User {
     protected String lastName;
     protected boolean isActive;
     protected boolean isAdmin;
+    protected boolean autoLogin;
     protected Date dateCreated;
     protected Image avatar;
     private final int PASSWORD_MIN_LENGTH = 8;
@@ -154,6 +155,20 @@ public class User {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /**@apiNote Gets the autologin field
+     * @return boolean
+     */
+    public boolean getAutoLogin() {
+        return autoLogin;
+    }
+
+    /**@apiNote Sets the autologin field
+     * @param autoLogin - boolean
+     */
+    public void setAutoLogin(boolean autoLogin) {
+        this.autoLogin = autoLogin;
     }
 
     /**@apiNote Gets email field
