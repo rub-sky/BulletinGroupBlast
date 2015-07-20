@@ -11,9 +11,12 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
+import android.widget.ProgressBar;
 
 
 public class MainActivity extends Activity {
@@ -24,11 +27,52 @@ public class MainActivity extends Activity {
     private Intent intentSignIn;
     private Intent intentUserLanding;
     public final static String USERID_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity";
+    private ProgressBar mProgress;
+    private int mProgressStatus = 0;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
+
+
+
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus += checkLoginData();   // This checks if there is local data available
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+                Log.i("My Tag","The Data Check is complete!!");
+            }
+        }).start();
+
+    }
+
+    /**
+     * When the activity resumes from another activity
+     */
+    @Override
+    public void onResume() {
+        super.onResume();  // Call the superclass method
+
+        /*TODO: Log the user out*/
+        checkLoginData();
+    }
+
+    /** Check if a User exists and is set to AutoLogin
+     */
+    private int checkLoginData() {
         int dataAvailable = LoadLocalData();  //Check for local Data
 
         try {
@@ -47,20 +91,12 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             /*TODO: Error Log entry*/
         }
+
+        return 10;
     }
 
-    /**@apiNote Check if a User exists and is set to AutoLogin
-     * @return boolean - true if success, false otherwise
-     */
-    private boolean checkUserAutoLogin() {
-        boolean result = false;
-
-
-
-        return result;
-    }
-
-    /**@apiNote Checks to see if any local data on the device
+    /**
+     * Checks to see if any local data on the device and loads it if there is
     * @return int -1 is Fail, 0 is No Local Data, 1 is Data Available and loaded
     */
     private int LoadLocalData() {
@@ -70,7 +106,9 @@ public class MainActivity extends Activity {
             /*TODO: Check the local data stored on device*/
             /*TODO: Load User if one exists locally*/
             userAccount = new User("John.Doe@gmail.com","password","John", "Doe");
-            //result = 0;
+            userAccount.setAutoLogin(false);
+
+//            result = 0;
             result = 1;
         } catch (Exception e) {
             /*TODO: Write to Error Log*/
@@ -81,7 +119,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * @apiNote Opens the User Landing activity for the user
+     *  Opens the User Landing activity for the user
      */
     private void goToUserLanding() {
         Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
@@ -91,7 +129,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * @apiNote Checks if the user needs to enter credentials or not nd redirects them to login or landing page
+     *  Checks if the user needs to enter credentials or not nd redirects them to login or landing page
      */
     private void goToUserLogin() {
         if (userAccount.getAutoLogin()) {
@@ -104,7 +142,7 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * @apitNote Redirecting to create a new user account activity
+     *  Redirecting to create a new user account activity
      */
     private void goToCreateNewUserAccount() {
         // Send the user to create a new user account

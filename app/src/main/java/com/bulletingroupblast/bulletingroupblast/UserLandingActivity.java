@@ -65,15 +65,16 @@ public class UserLandingActivity extends ActionBarActivity {
         // Attach an on click event to the list
         orgListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
                 // Show a message
-//                Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
-//                onListItemClick(parent.orgListView, view, position,id);
+//                Toast.makeText(getBaseContext(), adView.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
+                onOrgListItemClick(adView, view, position,id);
             }
         });
 
         TextView textViewToChange = (TextView) findViewById(R.id.lblUserEmail);   // This is a reference to the email text box
         textViewToChange.setText(testUser.getEmail());  // Change the email to what I want
+
     }
 
     @Override
@@ -98,17 +99,43 @@ public class UserLandingActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onListItemClick(ListView lv, View v, int position, long id) {
+    /**
+     * Organization Listview item click event
+     * @param adView
+     * @param v
+     * @param position
+     * @param id
+     */
+    private void onOrgListItemClick(AdapterView<?> adView, View v, int position, long id) {
         // Move to another activity
         try {
             Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.OrganizationActivity.class);     // Intent is for switching to a different activity
-            String message = "Organization: " + lv.getItemAtPosition(position);
+            String message = adView.getItemAtPosition(position).toString();
             intent.putExtra(EXTRA_MESSAGE, message);        // Adds the text value to the intent
             startActivity(intent);
         }
         catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage().toString(), Toast.LENGTH_LONG).show(); // Show a message in toast
         }
+    }
+
+    /**
+     * Add a new organization to the user list
+     * @param v
+     */
+    public void onNewOrgBtnClick(View v) {
+        Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateOrganizationActivity.class);     // Intent is for switching to a different activity
+        startActivity(intent);
+    }
+
+    /**
+     * When the activity resumes from another activity
+     */
+    @Override
+    public void onResume() {
+        super.onResume();  // Call the superclass method
+
+        /*TODO: Refresh the organization list*/
     }
 
 }

@@ -3,24 +3,45 @@
  * This program is released under the "GNU license".
  * Please see the file COPYING in this distribution for
  * license terms.
- * <p>
+ *
  * Created by Ruben Piatnitsky on 7/6/15.
  */
 
 package com.bulletingroupblast.bulletingroupblast;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class CreateGroupActivity extends ActionBarActivity {
+    protected Group newGroup; // This is the new group that will be created
+    protected int org_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        try {
+            Intent prevIntent = getIntent();
+            int org_id = prevIntent.getIntExtra("org_id", 0); // Get the organization id
+
+            if (org_id == 0) {
+            /*TODO: Throw an exception*/
+            } else {
+
+            }
+
+
+        } catch (Exception ex) {
+            Log.e(ex.getCause().toString(), ex.getMessage());
+        }
     }
 
     @Override
@@ -43,5 +64,50 @@ public class CreateGroupActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * The click event for the Create Group Button
+     * Creates a new group and then reroutes the app to user group list
+     * @param v
+     */
+    public void onCreateGroupBtnClick(View v) {
+
+        try {
+            // Get the reference to the text views
+            TextView txtOrgName = (TextView) findViewById(R.id.txtOrgName);
+            TextView txtDesc = (TextView) findViewById(R.id.txtGrpDescription);
+            TextView txtCategory = (TextView) findViewById(R.id.txtGrpCategory);
+
+            // Get string values from text boxes
+            String orgName = txtOrgName.getText().toString();
+            String orgDesc = txtDesc.getText().toString();
+            String orgCat = txtCategory.getText().toString();
+
+            // Create a group object
+            newGroup = new Group(10, orgName, orgDesc, orgCat);
+
+            /*TODO: Save group to database*/
+            // End this activity
+
+        } catch (Exception ex) {
+
+        }
+    }
+
+    /**
+     * The click event that cancels the group creation
+     * @param v
+     */
+    public void onCancelGroupCreateBtnClick(View v) {
+        finishActivity(0);
+    }
+
+    /**
+     * The click event for adding another user to the group
+     * @param v
+     */
+    public void onAddNewUserToGroup(View v) {
+        /*TODO: open a fragment with all users for the organization*/
     }
 }

@@ -27,6 +27,7 @@ import java.lang.String;
 public class CreateUserAccountActivity extends ActionBarActivity {
 
     private User newUser;   // THe new user that is being created
+    public final static String USERID_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +58,17 @@ public class CreateUserAccountActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // This is the click event for the create new user button
-    // It takes in the view
-    // Returns nothing
+    /** The click event for the create New User button
+     *
+     * @param v - View
+     */
     public void onClickCreateNewUser(View v) {
-        String message = "ERROR - In Creating User";
+        String message = "ERROR - While Creating User";
 
         if (v.getId() == R.id.btnCreateUserAccount) {
             if (createNewUser()) {
                 // If the user is created, then move to the landing page
-                Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
-                intent.putExtra("com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity", message);        // Adds the text value to the intent
-                startActivity(intent);
-                //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
+                jumpToUserLanding();
             }
 
             // Display an Error Message
@@ -78,9 +77,10 @@ public class CreateUserAccountActivity extends ActionBarActivity {
 
     }
 
-    // This function takes the new user form and creates a new user
-    // It takes in nothing
-    // It returns true if successful, false otherwise
+    /**Creates a new User account locally and then it saves it to the database
+     *
+     * @return boolean - true if successful, false otherwise
+     */
     private boolean createNewUser() {
         boolean result = false;
         boolean txtValuesNotValid = false;
@@ -135,5 +135,14 @@ public class CreateUserAccountActivity extends ActionBarActivity {
         }
 
         return result;
+    }
+
+    /**
+     *  Redirects to the User landing Activity
+     */
+    public void jumpToUserLanding() {
+        Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
+        intentUserLanding.putExtra(USERID_MESSAGE, newUser.getUserId());        // Adds the text value to the intent
+        startActivity(intentUserLanding);
     }
 }

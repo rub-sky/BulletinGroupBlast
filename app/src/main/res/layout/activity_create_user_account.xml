@@ -122,6 +122,6 @@
         android:layout_below="@+id/txtPasswordConfirm"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:onClick="@string/txtonClickCreateNewUser" />
+        android:onClick="onClickCreateNewUser" />
 
 </RelativeLayout>

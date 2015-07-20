@@ -27,4 +27,6 @@
     <string name="LBL_EMAIL">Email</string>
     <string name="LBL_PASSWORD">Password</string>
     <string name="LBL_PASSWORD_CONFIRM">Confirm Password</string>
+    <string name="title_activity_group">GroupActivity</string>
+    <string name="New_Group_Button">New Group</string>
 </resources>

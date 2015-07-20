@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.StringTokenizer;
 
 public class Organization {
+    protected int id;
     protected String name;
     protected String description;
     protected User admin;
@@ -37,38 +38,42 @@ public class Organization {
 //
 //    groupList.add(Group.class someGroup);
 
-    // This is the default constructor for the organization class
-    // It takes in the name, description, and user object for administrator
-    // Returns nothing
+    /** This is the default constructor for the organization class
+     * @param  orgName Organization name
+     * @param orgDesc Description of the organization
+     * @param orgAdmin Organization administrator
+    */
     public Organization(String orgName, String orgDesc, User orgAdmin) {
         if (orgName != null || !orgName.isEmpty()) {
-            name = orgName;
+            this.name = orgName;
         }
 //        else {
             // Throw exception
 //        }
 
-        description = orgDesc;
+        this.description = orgDesc;
 
         if (orgAdmin != null) {
-            admin = orgAdmin;
+            this.admin = orgAdmin;
         }
 //        else {
             //Throw exception
 //        }
 
-        address1 = new String();
-        address2 = new String();
-        city = new String();
-        state = new String();
-        zipCode = new String();
+        this.id = 0;
+        this.address1 = new String();
+        this.address2 = new String();
+        this.city = new String();
+        this.state = new String();
+        this.zipCode = new String();
 
-        createdDate = new Date();
+        this.createdDate = new Date();
     }
 
-    // This function allows you to add a new group to the organization
-    // It takes in a group object
-    // Returns: a true if the group is added or false otherwise
+    /** This function allows you to add a new group to the organization
+     * @param  newGroup - It takes in a group object
+     * @return true if the group is added and false otherwise
+     */
     public boolean addGroup(Group newGroup) {
         boolean success = false;
 
@@ -80,9 +85,10 @@ public class Organization {
         return success;
     }
 
-    // This function allows you to add a new group to the organization
-    // It takes in a group object
-    // Returns: a true if the group is added or false otherwise
+    /** This function allows you to add a new group to the organization
+     * @param someGroup It takes in a group object
+     * @return true if the group is added and false otherwise
+     */
     public boolean removeGroup(Group someGroup) {
         boolean success = false;
 
@@ -94,32 +100,49 @@ public class Organization {
         return success;
     }
 
-    // Gets the admin user
-    // Takes in Nothing
-    // Returns a User object
+    /** Gets the admin user
+     * Returns a User object
+     */
     public User getAdmin() {
         return admin;
     }
 
-    // Sets the organization admin
-    // Takes in a User object
-    // Returns nothing
+    /** Sets the organization admin
+     * Takes in a User object
+     */
     public void setAdmin(User admin) {
         // Send notification to current admin
         this.admin = admin;
     }
 
-    // Gets the organization name
-    // Takes in Nothing
-    // Returns a string
+    /** Gets the organization name
+      * Returns a string
+     */
     public String getName() {
         return name;
     }
 
-    // Sets the organization name
-    // Takes in a name string
-    // Returns nothing
+    /** Sets the organization name
+     * Takes in a name string
+     */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets the organization id
+     * @return int
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the organization id
+     * This function is only available within its class
+     * @param orgId
+     */
+    public void setId(int orgId) {
+        this.id = orgId;
     }
 }
