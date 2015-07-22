@@ -1,31 +1,39 @@
+/**
+ * Copyright © 2015 Ruben Piatnitsky
+ * This program is released under the "GNU license".
+ * Please see the file COPYING in this distribution for
+ * license terms.
+ *
+ * Created by Ruben Piatnitsky on 7/20/15.
+ */
+
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 
 public class GroupActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements GroupNavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    int orgId = 0; // The passed organization id
+    Group newGroup; // The new group being created
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private GroupNavigationDrawerFragment mGroupNavigationDrawerFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -37,14 +45,17 @@ public class GroupActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        mGroupNavigationDrawerFragment = (GroupNavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
+        mGroupNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        Intent prevIntent = getIntent();
+        orgId = prevIntent.getIntExtra("org_name",0); // Get the organization value from previous intent
     }
 
     @Override
@@ -80,7 +91,7 @@ public class GroupActivity extends ActionBarActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if (!mGroupNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
@@ -134,8 +145,8 @@ public class GroupActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_group, container, false);
-            return rootView;
+//            View rootView = inflater.inflate(R.layout.fragment_group, container, false);
+            return null;//rootView;
         }
 
         @Override
@@ -145,5 +156,7 @@ public class GroupActivity extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
+
+
 
 }

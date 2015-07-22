@@ -3,7 +3,7 @@
  * This program is released under the "GNU license".
  * Please see the file COPYING in this distribution for
  * license terms.
- * <p>
+ *
  * Created by Ruben Piatnitsky on 7/6/15.
  */
 
@@ -28,11 +28,18 @@ import java.util.ArrayList;
 
 public class UserLandingActivity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.OrganizationActivity";
+    protected GlobalState gs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_landing);
+
+        // Global Session Variables
+        gs = (GlobalState) getApplication();
+        gs.createTestData();
+
+
 
         User testUser;
         Intent intentPrev = getIntent();
@@ -56,6 +63,11 @@ public class UserLandingActivity extends ActionBarActivity {
         listItems.add(testOrg2.getName());
         listItems.add(testOrg3.getName());
         listItems.add(testOrg4.getName());
+
+        ArrayList<Organization> orgs = gs.getTestOrgs();
+        for (int i = 0; i < orgs.size(); i++) {
+            listItems.add(orgs.get(i).getName());
+        }
 
 
         ListView orgListView = (ListView) findViewById(R.id.lstOrganizations); // ListView reference

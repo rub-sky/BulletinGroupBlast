@@ -32,11 +32,12 @@ public class CreateGroupActivity extends ActionBarActivity {
             Intent prevIntent = getIntent();
             int org_id = prevIntent.getIntExtra("org_id", 0); // Get the organization id
 
-            if (org_id == 0) {
+//            if (org_id == 0) {
             /*TODO: Throw an exception*/
-            } else {
+                Log.i("Organization activity", String.valueOf(org_id));
+//            } else {
 
-            }
+//            }
 
 
         } catch (Exception ex) {
@@ -85,7 +86,7 @@ public class CreateGroupActivity extends ActionBarActivity {
             String orgCat = txtCategory.getText().toString();
 
             // Create a group object
-            newGroup = new Group(10, orgName, orgDesc, orgCat);
+            //newGroup = new Group(10, orgName, orgDesc, orgCat);
 
             /*TODO: Save group to database*/
             // End this activity
@@ -95,13 +96,6 @@ public class CreateGroupActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * The click event that cancels the group creation
-     * @param v
-     */
-    public void onCancelGroupCreateBtnClick(View v) {
-        finishActivity(0);
-    }
 
     /**
      * The click event for adding another user to the group

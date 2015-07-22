@@ -57,10 +57,11 @@
         android:layout_marginTop="48dp"
         android:layout_below="@+id/txtGrpCategory"
         android:layout_toRightOf="@+id/lblMemberCount"
-        android:layout_toEndOf="@+id/lblMemberCount" />
+        android:layout_toEndOf="@+id/lblMemberCount"
+        android:onClick="onAddNewUserToGroup" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Group"
         android:id="@+id/btnCreateGroup"
@@ -68,15 +69,6 @@
         android:layout_alignRight="@+id/txtGrpCategory"
         android:layout_alignEnd="@+id/txtGrpCategory"
         android:onClick="onCreateGroupBtnClick" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/btnCancelGroup"
-        android:layout_alignBottom="@+id/btnCreateGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"

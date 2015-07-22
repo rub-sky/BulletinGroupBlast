@@ -1,5 +1,6 @@
 package com.bulletingroupblast.bulletingroupblast;
 
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -22,12 +23,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class GroupNavigationDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -58,12 +61,15 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public NavigationDrawerFragment() {
+    public GroupNavigationDrawerFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GlobalState gs = new GlobalState();
+        gs.createTestData();
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -77,6 +83,29 @@ public class NavigationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
+        ArrayList<Group> testGroup = new ArrayList<>();
+        testGroup = gs.getTestGroups();
+
+        // Creating a list view object that refers to the list view on the page
+        ArrayList<String> listItems = new ArrayList<String>();
+        listItems.add("News");
+        listItems.add("Chat");
+        listItems.add("Members");
+
+        ListView orgListView = (ListView) this.getView().findViewById(R.id.lstGroupMenu); // ListView reference
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
+
+        orgListView.setAdapter(adapter);        // Attach the adapter to the listView
+        // Attach an on click event to the list
+        orgListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
+                // Show a message
+//                Toast.makeText(getBaseContext(), adView.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
+                onGroupMenuItemClick(adView, view, position, id);
+            }
+        });
     }
 
     @Override
@@ -278,5 +307,31 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    /** Group menu item click event function
+     * @param adView
+     * @param v
+     * @param position
+     * @param id
+     */
+    public void onGroupMenuItemClick(AdapterView<?> adView, View v, int position, long id) {
+        switch (position) {
+            case 0:
+                // Open Fragment
+                break;
+            case 1:
+                // Open Fragment
+                break;
+            case 2:
+                // Open Fragment
+                break;
+            case 3:
+                // Open Fragment
+                break;
+            default:
+                // Do something
+                break;
+        }
     }
 }
