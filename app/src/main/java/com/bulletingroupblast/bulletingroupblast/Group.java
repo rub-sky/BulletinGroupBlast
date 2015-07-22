@@ -23,7 +23,7 @@ public class Group {
     protected Date created;
     protected ArrayList members;
     protected ArrayList admins;
-    protected int orgId;
+    protected int orgId;    // The organization id that this group belongs to
 
     /*TODO: Add Chat, Announcement to variables*/
     /*TODO: avatar*/
@@ -38,21 +38,29 @@ public class Group {
         this.description = description;
 
         /*TODO: Initialize members, admins, chat and announcement*/
+        this.admins = new ArrayList<User>();
+        this.members = new ArrayList<User>();
     }
 
     /** This is the default constructor for group class
+     * @param grpId group id
      * @param orgId organization id string
      * @param name string
      * @param description string
      * @param cat category string
      */
-    public Group(int orgId, String name, String description, String cat) {
-        this.id = 0;
+    public Group(int grpId, int orgId, String name, String description, String cat, User admin) {
+        this.id = grpId;
+        this.orgId = orgId;
         this.name = name;
         this.description = description;
         this.category = cat;
 
         /*TODO: Initialize members, admins, chat and announcement*/
+        this.admins = new ArrayList<User>();
+        this.admins.add(admin);
+
+        this.members = new ArrayList<User>();
     }
 
     /** Gets the group Id

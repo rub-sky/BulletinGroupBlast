@@ -60,6 +60,35 @@ public class User {
         }
 
     }
+    /**@apiNote Default Constructor
+     * @param userId - int
+     * @param user_email - String
+     * @param user_password - String
+     * @param fName - String
+     * @param lName - String
+     */
+    public User(int userId, String user_email, String user_password, String fName, String lName) {
+        email = user_email;
+
+        if (checkStringValue(fName)) {
+            this.firstName = fName;
+        }
+
+        if (checkStringValue(lName)) {
+            this.lastName = lName;
+        }
+
+        this.userId = userId;
+        this.isActive = true;
+        this.isAdmin = true;
+        /*TODO: populate avatar image*/
+        this.dateCreated = new Date();
+
+        if (!setPassword(user_password)) {
+            /*TODO: Cast an exception if the password setting fails*/
+        }
+
+    }
 
     /**@apiNote Creates a user object from an existing user id.
      * @param uId
