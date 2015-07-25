@@ -14,8 +14,7 @@ import java.util.Date;
 import com.bulletingroupblast.bulletingroupblast.User;
 
 
-public class Group {
-    private int id;
+public class Group extends DatabaseEntity {
     protected String name;
     protected String description;
     protected String category;
@@ -25,6 +24,8 @@ public class Group {
     protected ArrayList admins;
     protected int orgId;    // The organization id that this group belongs to
 
+    private final String TABLE_NAME = "tblOrganization";
+
     /*TODO: Add Chat, Announcement to variables*/
     /*TODO: avatar*/
 
@@ -33,9 +34,12 @@ public class Group {
      * @param description string
      */
     public Group(String name, String description) {
+        super();
+
         this.id = 0;
         this.name = name;
         this.description = description;
+        this.m_tableName = TABLE_NAME;
 
         /*TODO: Initialize members, admins, chat and announcement*/
         this.admins = new ArrayList<User>();
@@ -50,6 +54,8 @@ public class Group {
      * @param cat category string
      */
     public Group(int grpId, int orgId, String name, String description, String cat, User admin) {
+        super();
+
         this.id = grpId;
         this.orgId = orgId;
         this.name = name;
@@ -63,12 +69,6 @@ public class Group {
         this.members = new ArrayList<User>();
     }
 
-    /** Gets the group Id
-     * @return group Id
-     */
-    public int getId() {
-        return id;
-    }
 
     /** Gets the name of the group
      * @return group name

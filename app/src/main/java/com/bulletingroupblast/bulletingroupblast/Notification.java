@@ -8,5 +8,17 @@ package com.bulletingroupblast.bulletingroupblast;
  * <p>
  * Created by Ruben Piatnitsky on 7/6/15.
  */
-public class Notification {
+
+
+public class Notification extends DatabaseEntity {
+
+    private final String TABLE_NAME = "tblNotification";
+
+    /** Default Constructor
+     */
+    public Notification() {
+        super();
+
+        this.m_tableName = TABLE_NAME;
+    }
 }

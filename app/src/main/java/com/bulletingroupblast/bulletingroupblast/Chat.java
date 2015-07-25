@@ -17,14 +17,15 @@ import java.util.ArrayList;
 /**
  * This class is the chat class that stores the chat data
  */
-public class Chat {
-    protected int id;
+public class Chat extends DatabaseEntity{
     protected String topic;
     protected ArrayList<ChatMessage> messages;
     protected Timestamp CreatedDate;
     protected ArrayList<User> members;
     protected int group_id;
     protected int initiator_id;
+
+    private final String TABLE_NAME = "tblChat";
 
     /** This is the default constructor
      * @param id
@@ -34,17 +35,14 @@ public class Chat {
      * @param initiator
      */
     public Chat(int id, String topic, ArrayList<User> members, int group_id, int initiator) {
+        super();
+
         this.id = id;
         this.topic = topic;
         this.group_id = group_id;
         this.initiator_id = initiator;
-    }
 
-    /** Gets the chat id
-     * @return int
-     */
-    public int getId() {
-        return id;
+        this.m_tableName = TABLE_NAME;
     }
 
     /** Gets the chat Topic

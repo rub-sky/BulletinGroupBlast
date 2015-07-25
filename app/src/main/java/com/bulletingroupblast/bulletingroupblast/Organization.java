@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-public class Organization {
-    protected int id;
+public class Organization extends DatabaseEntity{
     protected String name;
     protected String description;
     protected Timestamp createdDate;
@@ -35,6 +34,8 @@ public class Organization {
     protected ArrayList<User> userList = new ArrayList<User>();
     protected ArrayList<User> adminList = new ArrayList<User>();
 
+    private final String TABLE_NAME = "tblOrganization";
+
 
     /** This is the default constructor for the organization class
      * @param orgName Organization name
@@ -42,6 +43,8 @@ public class Organization {
      * @param orgAdmin Organization administrator
     */
     public Organization(String orgName, String orgDesc, User orgAdmin) {
+        super();
+
         this.groupList = new ArrayList<>();
         this.adminList = new ArrayList<>();
         this.userList = new ArrayList<>();
@@ -75,6 +78,8 @@ public class Organization {
      * @param orgAdmin Organization administrator
      */
     public Organization(int orgId, String orgName, String orgDesc, User orgAdmin) {
+        super();
+
         if (orgName != null || !orgName.isEmpty()) {
             this.name = orgName;
         }
@@ -138,37 +143,6 @@ public class Organization {
         this.name = name;
     }
 
-    /**
-     * Gets the organization id
-     * @return int
-     */
-    public int getId() {
-        return id;
-    }
-
-    /** Save the organization to the database
-     *
-     */
-    public void save() {
-        try {
-            /*TODO: Save the organization to the database*/
-        } catch (Exception ex) {
-            Log.e(ex.getCause().toString(),ex.getMessage());
-        }
-    }
-
-    /** Delete the Organization from the database
-     *
-     */
-    public void delete() {
-        try {
-            /*TODO: Delete the organization from the database*/
-            /*TODO: Delete all related records to the database*/
-        } catch (Exception ex) {
-            Log.e(ex.getCause().toString(),ex.getMessage());
-        }
-    }
-
     /** Adds a new user to the organization
      * @param toAddUser
      */
@@ -182,7 +156,7 @@ public class Organization {
     }
 
     /** Adds a new user to the organization
-     * @param toAddUser
+     * @param userId
      */
     public void removeUser(int userId) {
         try {

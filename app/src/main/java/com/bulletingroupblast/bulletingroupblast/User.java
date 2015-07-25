@@ -11,27 +11,63 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.media.Image;
-
 import com.bulletingroupblast.bulletingroupblast.Organization;
 import java.sql.Array;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Map;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class User {
+public class User extends DatabaseEntity{
     protected String email;
-    protected int userId;
     protected String password;
+    protected String salt;
     protected String firstName;
     protected String lastName;
     protected boolean isActive;
-    protected boolean isAdmin;
     protected boolean autoLogin;
     protected Date dateCreated;
+    protected String avatarFileName;
     protected Image avatar;
+
+    private final String TABLE_NAME = "tblUser";
+    private final String[] TABLE_COL_NAMES = {
+            "id",
+            "email",
+            "password",
+            "salt",
+            "firstName",
+            "lastName",
+            "isActive",
+            "autoLogon",
+            "dateCreated",
+            "avatarFileName"
+    };
+    private final String[] TABLE_COL_TYPES = {
+            "INTEGER PRIMARY KEY",
+            "VARCHAR(100)",
+            "VARCHAR(300)",
+            "VARCHAR(300)",
+            "VARCHAR(50)",
+            "VARCHAR(50)",
+            "BOOLEAN DEFAULT 1",
+            "BOOLEAN DEFAULT 1",
+            "DATETIME",
+            "TEXT"
+    };
     private final int PASSWORD_MIN_LENGTH = 8;
     private final int PASSWORD_MAX_LENGTH = 64;
-    private ArrayList<Organization> organizationList = new ArrayList<Organization>();  // List of organizations this user belongs to
-    private ArrayList<Group> groupList = new ArrayList<Group>(); // List of Groups that this user belongs to
+
+    // List of organizations this user belongs to
+    private ArrayList<Organization> organizationList = new ArrayList<Organization>();
+    // List of Groups that this user belongs to
+    private ArrayList<Group> groupList = new ArrayList<Group>();
+
+    // The mapping of columns to their types
+    // Used to create the table in the database
+    protected Map<String, String> tableMap;
 
     /**@apiNote Default Constructor
      * @param user_email - String
@@ -40,6 +76,8 @@ public class User {
      * @param lName - String
      */
     public User(String user_email, String user_password, String fName, String lName) {
+        super();
+
         email = user_email;
 
         if (checkStringValue(fName)) {
@@ -51,9 +89,11 @@ public class User {
         }
 
         this.isActive = true;
-        this.isAdmin = true;
+
         /*TODO: populate avatar image*/
+
         this.dateCreated = new Date();
+        this.m_tableName = TABLE_NAME; // Set the table name
 
         if (!setPassword(user_password)) {
             /*TODO: Cast an exception if the password setting fails*/
@@ -68,6 +108,8 @@ public class User {
      * @param lName - String
      */
     public User(int userId, String user_email, String user_password, String fName, String lName) {
+        super();
+
         email = user_email;
 
         if (checkStringValue(fName)) {
@@ -78,11 +120,11 @@ public class User {
             this.lastName = lName;
         }
 
-        this.userId = userId;
+        this.id = userId;
         this.isActive = true;
-        this.isAdmin = true;
         /*TODO: populate avatar image*/
         this.dateCreated = new Date();
+        this.m_tableName = TABLE_NAME; // Set the table name
 
         if (!setPassword(user_password)) {
             /*TODO: Cast an exception if the password setting fails*/
@@ -107,7 +149,7 @@ public class User {
     public boolean setPassword(String newPassword) {
         boolean success = false;
 
-        if (checkStringValue(newPassword)) {
+        if (super.checkStringValue(newPassword)) {
             if (newPassword.length() >= PASSWORD_MIN_LENGTH || newPassword.length() <= PASSWORD_MAX_LENGTH) {
                 /*TODO: Hash the password string*/
                 this.password = newPassword;
@@ -116,6 +158,11 @@ public class User {
         }
 
         return success;
+    }
+
+    protected String salt(String MD5Password, Date dateCreated) {
+        String Salt = dateCreated.toString() + SecurityUtil.RandomString(16);
+        return (MD5Password + salt) + salt;
     }
 
 
@@ -149,21 +196,14 @@ public class User {
         return success;
     }
 
-    /**@apiNote Gets User Id field
-     * @return User Id - Int
-     */
-    public int getUserId() {
-        return userId;
-    }
-
-    /**@apiNote Gets First Name field
+    /** Gets First Name field
      * @return First Name - String
      */
     public String getFirstName() {
         return this.firstName;
     }
 
-    /**@apiNote Sets First Name field
+    /** Sets First Name field
      * @param firstName - String
      * @return null
      */
@@ -171,14 +211,14 @@ public class User {
         this.firstName = firstName;
     }
 
-    /**@apiNote Gets email field
+    /** Gets email field
      * @return email - String
      */
     public String getLastName() {
         return this.lastName;
     }
 
-    /**@apiNote Sets Last Name field
+    /** Sets Last Name field
      * @param lastName - String
      * @return null
      */
@@ -186,28 +226,28 @@ public class User {
         this.lastName = lastName;
     }
 
-    /**@apiNote Gets the autologin field
+    /** Gets the autologin field
      * @return boolean
      */
     public boolean getAutoLogin() {
         return autoLogin;
     }
 
-    /**@apiNote Sets the autologin field
+    /** Sets the autologin field
      * @param autoLogin - boolean
      */
     public void setAutoLogin(boolean autoLogin) {
         this.autoLogin = autoLogin;
     }
 
-    /**@apiNote Gets email field
+    /** Gets email field
      * @return email - String
      */
     public String getEmail() {
         return this.email;
     }
 
-    /**@apiNote Sets email field
+    /** Sets email field
      * @param email - String
      * @return null
      */
@@ -216,56 +256,7 @@ public class User {
         this.email = email;
     }
 
-    /** @apiNote Checks the value of the given string to make sure its not null or empty
-     * @param strVal
-     * @return boolean - true if string not empty or null, false otherwise
-     */
-    private boolean checkStringValue(String strVal) {
-        boolean success = false;
-
-        if (strVal != null || !strVal.isEmpty()) {
-            success = true;
-        }
-
-        return success;
-    }
-
-    /**@apiNote  Updates the current user info in the database
-     * @return SQL String for Update
-     */
-    public String UpdateString() {
-        String result = "Update";
-        /*TODO: Generate an UPDATE statement*/
-
-        return result;
-    }
-
-    /**@apiNote Inserts the current user into the database
-     * @return SQL String for insert
-     */
-    public String InsertString() {
-        String result = "Insert";
-        /*TODO: Generate an INSERT statement*/
-        String qry = "INSERT into users values() where id=" + this.userId;
-
-        return result;
-    }
-
-    /**@apiNote Deletes the current user from the database and initializes the variables
-     * @return SQL String for Delete
-     */
-    public String DeleteString() {
-        return "Delete from tblUser where id="+this.userId;
-    }
-
-    /**@apiNote  Populates the user from the database
-     * @return boolean - true if successful, false otherwise
-     */
-    public String getDataFromDB() {
-        return "select * from tblUsers where id="+this.userId;
-    }
-
-    /**@apiNote Sends the user a confirmation email
+    /** Sends the user a confirmation email
      * @return boolean - true if message sent and false otherwise
      */
     public boolean SendConfirmation() {

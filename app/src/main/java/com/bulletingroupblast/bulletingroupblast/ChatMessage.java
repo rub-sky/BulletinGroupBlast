@@ -13,33 +13,31 @@ import android.util.Log;
 
 import java.sql.Timestamp;
 
-public class ChatMessage {
-    protected int id;
+public class ChatMessage extends DatabaseEntity{
     protected int chat_id;
     protected Timestamp posted_date;
     protected String message;
-    protected User user;
+    protected int userId;
+
+    private final String TABLE_NAME = "tblChatMessage";
 
     /**
      * Default constructor for the message
-     * @param id
-     * @param chatId
-     * @param message
-     * @param user
+     * @param id int
+     * @param chatId int
+     * @param message string
+     * @param userId int
      */
-    public ChatMessage(int id, int chatId, Timestamp posted_date, String message, User user) {
+    public ChatMessage(int id, int chatId, Timestamp posted_date, String message, int userId) {
+        super();
+
         this.id = id;
         this.chat_id = chatId;
         this.posted_date = posted_date;
         this.message = message;
-        this.user = user;
-    }
+        this.userId = userId;
 
-    /** Get the message id
-     * @return int id
-     */
-    public int getId() {
-        return id;
+        this.m_tableName = TABLE_NAME;
     }
 
     /** Get the message posted date
@@ -66,18 +64,9 @@ public class ChatMessage {
     /** Get the message user that posted the message
      * @return user
      */
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    /** Saves the message to the database
-     *
-     */
-    public void save() {
-        try {
-        /*TODO: Save this message to the database*/
-        } catch (Exception ex) {
-            Log.e(ex.getCause().toString(), ex.getMessage());
-        }
-    }
+    
 }

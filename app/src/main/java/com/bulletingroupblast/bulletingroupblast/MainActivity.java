@@ -13,8 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.app.Activity;
 import android.widget.ProgressBar;
 
@@ -22,7 +20,7 @@ import android.widget.ProgressBar;
 public class MainActivity extends Activity {
 
     private User userAccount;
-    private AppData bgb_DB;
+    private DatabaseHandler bgb_DB;
     private Intent intentNewUser;
     private Intent intentSignIn;
     private Intent intentUserLanding;
@@ -123,7 +121,7 @@ public class MainActivity extends Activity {
      */
     private void goToUserLanding() {
         Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
-        intentUserLanding.putExtra(USERID_MESSAGE, userAccount.getUserId());        // Adds the text value to the intent
+        intentUserLanding.putExtra(USERID_MESSAGE, userAccount.getId());        // Adds the text value to the intent
         startActivity(intentUserLanding);
         //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
     }
