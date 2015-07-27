@@ -1,78 +1,129 @@
 package com.bulletingroupblast.bulletingroupblast;
 
-import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
+import android.view.ViewGroup;
+import android.support.v4.widget.DrawerLayout;
 
 
-public class OrganizationActivity extends FragmentActivity {
+public class OrganizationActivity extends ActionBarActivity
+        implements NavigationOrganizationDrawerFragment.NavigationDrawerCallbacks {
 
-    protected Organization currentOrg;
-    User testUser;
+    /**
+     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+     */
+    private NavigationOrganizationDrawerFragment mNavigationOrganizationDrawerFragment;
+
+    /**
+     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     */
+    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organization); // Need to remove because you are receiving an intent
+        setContentView(R.layout.activity_organization);
 
-        try {
-            //Temp Data
-            testUser = new User("test.test@gmail.com", "password", "Test", "User");
-            currentOrg = new Organization("Portland State University", "A description", testUser);
-            //currentOrg.setId(10);
+        mNavigationOrganizationDrawerFragment = (NavigationOrganizationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.organization_navigation_drawer);
+        mTitle = getTitle();
 
+        // Set up the drawer.
+        mNavigationOrganizationDrawerFragment.setUp(
+                R.id.organization_navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
 
-            Intent intent = getIntent();
-            String message = intent.getStringExtra(UserLandingActivity.EXTRA_MESSAGE);   // Get the string that was passed through the intent
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-            TextView txtOrgName = (TextView) findViewById(R.id.lblOrgName); // Get the reference to the textview
-            txtOrgName.setText(message);     // Set the message
+        // This is the click event for each menu item
+        // This is where I will open a fragment based on selection
+        switch (position) {
+            case 1:
+                // Overview Fragment
 
-            // Creating a list view object that refers to the list view on the page
-            ArrayList<String> listItems = new ArrayList<String>();
-            listItems.add("Groups");
-            listItems.add("News");
-            listItems.add("Calendar");
-            listItems.add("Invite Person");
+                break;
+            case 2:
+                // Group list fragment
+                break;
+            case 3:
+                // News list fragment
+                break;
+            case 4:
+                // Events list fragment
+                break;
+            case 5:
+                // Calendar fragment
+                break;
+            case 6:
+                // Users fragment
+                break;
+            default:
+                // open the overview for default
+                break;
+        }
 
-            ListView lvOverView = (ListView) findViewById(R.id.lvOrgOverViewItems); // ListView reference
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
-            lvOverView.setAdapter(adapter);        // Attach the adapter to the listView
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .commit();
+    }
 
-            // Attach an on click event to the list
-            lvOverView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
-                    // Show a message
-                    Toast.makeText(getBaseContext(), adView.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
-                }
-            });
-
-            // load the current organization
-        } catch (Exception ex) {
-            Log.e(ex.getCause().toString(), ex.getMessage());
+    /** Side menu selected item click
+     * @param number
+     */
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_overview);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_groups);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_news);
+                break;
+            case 4:
+                mTitle = getString(R.string.title_events);
+                break;
+            case 5:
+                mTitle = getString(R.string.title_calendar);
+                break;
+            case 6:
+                mTitle = getString(R.string.title_users);
+                break;
         }
     }
 
-    //============================
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_organization, menu);
-        return true;
+        if (!mNavigationOrganizationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            getMenuInflater().inflate(R.menu.organization, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -91,27 +142,42 @@ public class OrganizationActivity extends FragmentActivity {
     }
 
     /**
-     * When the activity resumes from another activity
+     * A placeholder fragment containing a simple view.
      */
-    @Override
-    public void onResume() {
-        super.onResume();  // Call the superclass method
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /*TODO: Refresh the lists*/
-    }
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
 
-    /**
-     * Go to the new Group activity
-     * @param v view
-     */
-    public void onClick_New_Group(View v) {
-        try {
-            Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateGroupActivity.class);     // Intent is for switching to a different activity
-            intent.putExtra("org_id", currentOrg.getId());  // Pass the organization id
-            startActivity(intent);
+        public PlaceholderFragment() {
+        }
 
-        } catch (Exception ex) {
-            Log.e(ex.getLocalizedMessage(),ex.getMessage());
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_organization, container, false);
+            return rootView;
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((OrganizationActivity) activity).onSectionAttached(
+                    getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
 

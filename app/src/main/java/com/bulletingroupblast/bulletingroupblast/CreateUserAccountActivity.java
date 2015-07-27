@@ -142,7 +142,7 @@ public class CreateUserAccountActivity extends ActionBarActivity {
      */
     public void jumpToUserLanding() {
         Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
-        intentUserLanding.putExtra(USERID_MESSAGE, newUser.getUserId());        // Adds the text value to the intent
+        intentUserLanding.putExtra(USERID_MESSAGE, newUser.getId());        // Adds the text value to the intent
         startActivity(intentUserLanding);
     }
 }

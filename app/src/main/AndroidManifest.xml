@@ -14,11 +14,11 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".GlobalState"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="com.bulletingroupblast.bulletingroupblast.GlobalState">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,7 +31,6 @@
         </activity>
         <activity
             android:name=".UserLandingActivity"
-            android:label="@string/title_activity_user_landing"
             android:parentActivityName=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,14 +48,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".OrganizationActivity"
-            android:label="@string/title_activity_organization"
-            android:parentActivityName=".UserLandingActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bulletingroupblast.bulletingroupblast.UserLandingActivity" />
         </activity>
         <activity
             android:name=".CreateUserAccountActivity"
@@ -93,6 +84,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bulletingroupblast.bulletingroupblast.OrganizationActivity" />
+        </activity>
+        <activity
+            android:name=".OrganizationActivity"
+            android:label="@string/title_activity_organization"
+            android:parentActivityName=".UserLandingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bulletingroupblast.bulletingroupblast.UserLandingActivity" />
         </activity>
     </application>
 

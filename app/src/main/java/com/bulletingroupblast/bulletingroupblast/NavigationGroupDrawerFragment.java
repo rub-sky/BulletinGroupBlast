@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class GroupNavigationDrawerFragment extends Fragment {
+public class NavigationGroupDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -61,7 +61,7 @@ public class GroupNavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public GroupNavigationDrawerFragment() {
+    public NavigationGroupDrawerFragment() {
     }
 
     @Override
@@ -131,9 +131,10 @@ public class GroupNavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
+                        getString(R.string.title_news),
+                        getString(R.string.title_events),
+                        getString(R.string.title_chat),
+                        getString(R.string.title_users)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

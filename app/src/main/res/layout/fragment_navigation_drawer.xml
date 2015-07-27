@@ -3,5 +3,5 @@
     android:layout_height="match_parent" android:choiceMode="singleChoice"
     android:divider="@android:color/transparent" android:dividerHeight="0dp"
     android:background="#cccc"
-    tools:context="com.bulletingroupblast.bulletingroupblast.GroupNavigationDrawerFragment"
+    tools:context="com.bulletingroupblast.bulletingroupblast.NavigationGroupDrawerFragment"
     android:id="@+id/lstGroupMenu" />
