@@ -9,6 +9,7 @@ package com.bulletingroupblast.bulletingroupblast;
  * Created by Ruben Piatnitsky on 7/6/15.
  */
 
+import android.media.Image;
 import android.util.Log;
 
 import com.bulletingroupblast.bulletingroupblast.Group;
@@ -29,6 +30,7 @@ public class Organization extends DatabaseEntity{
     protected String state;
     protected String zipCode;
     protected String websiteLink;
+    protected Image logo;
 
     protected ArrayList<Group> groupList = new ArrayList<Group>();
     protected ArrayList<User> userList = new ArrayList<User>();
@@ -130,21 +132,21 @@ public class Organization extends DatabaseEntity{
     }
 
     /** Gets the organization name
-      * Returns a string
+      * @return A string of the name
      */
     public String getName() {
         return name;
     }
 
     /** Sets the organization name
-     * Takes in a name string
+     * @param name Takes in a name string
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /** Adds a new user to the organization
-     * @param toAddUser
+     * @param toAddUser User object to add to the organization users list
      */
     public void addUser(User toAddUser) {
         try {
@@ -156,7 +158,7 @@ public class Organization extends DatabaseEntity{
     }
 
     /** Adds a new user to the organization
-     * @param userId
+     * @param userId The user id (int) to remove
      */
     public void removeUser(int userId) {
         try {
@@ -176,9 +178,25 @@ public class Organization extends DatabaseEntity{
     }
 
     /** Sets the website link
-     * @param websiteLink
+     * @param websiteLink A link to the given website
      */
     public void setWebsiteLink(String websiteLink) {
         this.websiteLink = websiteLink;
+    }
+
+    /** Gets the logo of the organization
+     * @return Image of the logo
+     */
+    public Image getLogo() {
+        return logo;
+    }
+
+    /** Sets the logo of the organization
+     * @param logo Image file of the logo
+     */
+    public void setLogo(Image logo) {
+        /*TODO: Resize the image*/
+        /*TODO: Save the image to local folder*/
+        this.logo = logo;
     }
 }

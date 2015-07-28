@@ -7,4 +7,5 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="#cccc"
-    tools:context="com.bulletingroupblast.bulletingroupblast.NavigationOrganizationDrawerFragment" />
+    tools:context="com.bulletingroupblast.bulletingroupblast.NavigationOrganizationDrawerFragment"
+    android:theme="@style/AppTheme" />

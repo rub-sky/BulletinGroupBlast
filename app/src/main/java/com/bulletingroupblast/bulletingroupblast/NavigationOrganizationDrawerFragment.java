@@ -311,48 +311,6 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
-    }
-
-    public void onFragmentInteraction(int position) {
-        switch (position) {
-            case 0:
-                // Overview
-                break;
-            case 1:
-                // Create a new fragment and specify the list to show based on position
-                Fragment groupListFragment = new GroupItemFragment();
-                Bundle args = new Bundle();
-                //args.putInt(GroupItemFragment, position); // Args that needed to be passed
-            /*TODO: Pass the organization to fragment*/
-                groupListFragment.setArguments(args);
-
-                // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.contentPanel, groupListFragment)
-                        .commit();
-
-                // Highlight the selected item, update the title, and close the drawer
-                mDrawerListView.setItemChecked(position, true);
-                getActionBar().setTitle(mTitleList[position]);
-                mDrawerLayout.closeDrawer(mDrawerListView);
-                break;
-            case 2:
-                // Something
-                break;
-            case 3:
-                // Something
-                break;
-            case 4:
-                // Something
-                break;
-            case 5:
-                // Something
-                break;
-            default:
-                // Overview
-                break;
-        }
+        public void onNavigationDrawerItemSelected(int position);
     }
 }

@@ -1,17 +1,20 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 
 public class OrganizationActivity extends ActionBarActivity
@@ -26,6 +29,7 @@ public class OrganizationActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private String mOrganization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,43 +44,65 @@ public class OrganizationActivity extends ActionBarActivity
         mNavigationOrganizationDrawerFragment.setUp(
                 R.id.organization_navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+//        // Get the organization information
+//        Intent intent = getIntent();
+//        // Get the string that was passed through the intent
+//        String message = intent.getStringExtra(UserLandingActivity.EXTRA_MESSAGE);
+//        mTitle = message;   // Set the tile
+
     }
 
+    /** The click event for the navagation drawer list items
+     * open a fragment based on selection
+     * @param position
+     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = null;
 
-        // This is the click event for each menu item
-        // This is where I will open a fragment based on selection
+        // This is the click event switch for each menu item
         switch (position) {
-            case 1:
+            case 0:
                 // Overview Fragment
-
+                fragment = new OrganizationOverviewFragment();
+                break;
+            case 1:
+                // Group list fragment
+                fragment = new GroupItemFragment();
                 break;
             case 2:
-                // Group list fragment
+                // News list fragment
+//                fragment = new NewsListFragment();
                 break;
             case 3:
-                // News list fragment
+                // Events list fragment
+//                fragment = new EventsListFragment();
                 break;
             case 4:
-                // Events list fragment
+                // Calendar fragment
+//                fragment = new CalendarFragment();
                 break;
             case 5:
-                // Calendar fragment
-                break;
-            case 6:
                 // Users fragment
+//                fragment = new UserListFragment();
                 break;
             default:
                 // open the overview for default
+//                fragment = new GroupOverViewFragment();
                 break;
         }
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        // Check if fragment is valid
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            // Replace the fragment with selected fragment
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        } else {
+            Log.e("OrganizationActivity", "Error in creating fragment");
+        }
     }
 
     /** Side menu selected item click
@@ -138,6 +164,8 @@ public class OrganizationActivity extends ActionBarActivity
             return true;
         }
 
+        onNavigationDrawerItemSelected(id);
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -179,6 +207,108 @@ public class OrganizationActivity extends ActionBarActivity
             ((OrganizationActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+
+//        public void onNavigationDrawerItemSelected(int position) {
+//            switch (position) {
+//                case 0:
+//                    // Overview
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 1:
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    // Create a new fragment and specify the list to show based on position
+//                    Fragment groupListFragment = new GroupItemFragment();
+//                    Bundle args = new Bundle();
+//                    //args.putInt(GroupItemFragment, position); // Args that needed to be passed
+//                    /*TODO: Pass the organization to fragment*/
+//                    groupListFragment.setArguments(args);
+//
+//                    // Insert the fragment by replacing any existing fragment
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.contentPanel, groupListFragment)
+//                            .commit();
+//
+//                    // Highlight the selected item, update the title, and close the drawer
+//                    mDrawerListView.setItemChecked(position, true);
+//                    getActionBar().setTitle(mTitleList[position]);
+//                    mDrawerLayout.closeDrawer(mDrawerListView);
+//
+//                    break;
+//                case 2:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 3:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 4:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 5:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                default:
+//                    // Overview
+//                    break;
+//            }
+//        }
+
+
+//        public void onFragmentInteraction(int position) {
+//
+//            Log.i("Nav. Drawer position", String.valueOf(position));
+//            switch (position) {
+//                case 0:
+//                    // Overview
+//
+//                    break;
+//                case 1:
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    /* Create a new fragment and specify the list to show based on position
+//                    Fragment groupListFragment = new GroupItemFragment();
+//                    Bundle args = new Bundle();
+//                    //args.putInt(GroupItemFragment, position); // Args that needed to be passed
+//                *//**//*TODO: Pass the organization to fragment*//**//*
+//                    groupListFragment.setArguments(args);
+//
+//                    // Insert the fragment by replacing any existing fragment
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    fragmentManager.beginTransaction()
+//                            .replace(R.id.contentPanel, groupListFragment)
+//                            .commit();
+//
+//                    // Highlight the selected item, update the title, and close the drawer
+//                    mDrawerListView.setItemChecked(position, true);
+//                    getActionBar().setTitle(mTitleList[position]);
+//                    mDrawerLayout.closeDrawer(mDrawerListView);
+//                    break;
+//                case 2:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 3:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 4:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                case 5:
+//                    // Something
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//                default:
+//                    // Overview
+//                    Log.i("Nav. Drawer position", String.valueOf(position));
+//                    break;
+//            }
+//        }
     }
 
 }

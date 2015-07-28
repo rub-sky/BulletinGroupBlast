@@ -112,7 +112,7 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
         return view;
     }
 
-    @Override
+  /*  @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -121,7 +121,7 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
+    }*/
 
     @Override
     public void onDetach() {
