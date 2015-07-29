@@ -36,4 +36,7 @@
     <string name="LBL_PASSWORD_CONFIRM">Confirm Password</string>
     <string name="title_activity_group">GroupActivity</string>
     <string name="New_Group_Button">New Group</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

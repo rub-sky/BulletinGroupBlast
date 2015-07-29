@@ -74,23 +74,23 @@ public class OrganizationActivity extends ActionBarActivity
                 break;
             case 2:
                 // News list fragment
-//                fragment = new NewsListFragment();
+                fragment = new NewsItemFragment();
                 break;
             case 3:
                 // Events list fragment
-//                fragment = new EventsListFragment();
+                fragment = new EventItemFragment();
                 break;
             case 4:
                 // Calendar fragment
-//                fragment = new CalendarFragment();
+                fragment = new CalendarFragment();
                 break;
             case 5:
                 // Users fragment
-//                fragment = new UserListFragment();
+                fragment = new UserItemFragment();
                 break;
             default:
                 // open the overview for default
-//                fragment = new GroupOverViewFragment();
+                fragment = new OrganizationOverviewFragment();
                 break;
         }
 
