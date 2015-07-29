@@ -1,5 +1,3 @@
-package com.bulletingroupblast.bulletingroupblast;
-
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
@@ -8,6 +6,8 @@ package com.bulletingroupblast.bulletingroupblast;
  * <p>
  * Created by Ruben Piatnitsky on 7/6/15.
  */
+package com.bulletingroupblast.bulletingroupblast;
+
 
 import android.media.Image;
 import android.util.Log;

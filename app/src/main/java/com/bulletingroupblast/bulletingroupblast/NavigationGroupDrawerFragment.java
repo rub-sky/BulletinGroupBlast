@@ -1,3 +1,12 @@
+/**
+ * Copyright © 2015 Ruben Piatnitsky
+ * This program is released under the "GNU license".
+ * Please see the file COPYING in this distribution for
+ * license terms.
+ *
+ * Created by Ruben Piatnitsky on 7/29/15.
+ */
+
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.provider.Settings;

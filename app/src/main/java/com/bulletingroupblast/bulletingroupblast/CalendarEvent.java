@@ -1,17 +1,17 @@
-package com.bulletingroupblast.bulletingroupblast;
-
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
-
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
  * Please see the file COPYING in this distribution for
  * license terms.
- * <p>
+ *
  * Created by Ruben Piatnitsky on 7/6/15.
  */
+
+package com.bulletingroupblast.bulletingroupblast;
+
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 
 
 public class CalendarEvent extends DatabaseEntity{

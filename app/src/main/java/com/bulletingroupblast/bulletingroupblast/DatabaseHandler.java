@@ -6,6 +6,7 @@
  *
  * Created by Ruben Piatnitsky on 7/14/15.
  */
+
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.content.Context;
