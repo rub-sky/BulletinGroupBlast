@@ -83,7 +83,7 @@ public class OrganizationOverviewFragment extends Fragment {
 
     }
 
-    /** THe on Create View Event for fragment
+    /** The on Create View Event for fragment
      *
      * @param inflater
      * @param container

@@ -41,8 +41,19 @@ public class GlobalState extends Application {
     protected ArrayList<User> testUsers;
     protected ArrayList<Organization> testOrgs;
     protected ArrayList<Group> testGroups;
+    protected Integer[] userImageList;
+    protected String[] userNameList;
 
-//    pictureData [] picturemarkers = null;
+    /** Default Constructor
+     *
+     */
+    public GlobalState() {
+
+        createTestData();
+
+    }
+
+//    pictureData [] pictureA = null;
 
     /** Get the data file path
      * @return file
@@ -62,7 +73,7 @@ public class GlobalState extends Application {
      * @return picture;
      */
     /*public pictureData[] getPictureData(){
-        return picturemarkers;
+        return picture;
     }
 
     /** Set the picture data
@@ -70,7 +81,7 @@ public class GlobalState extends Application {
      */
     /*
     public void setPictureData(pictureData [] picData){
-        picturemarkers = picData;
+        pictureA = picData;
     }*/
 
     /** Set the refresh for the data
@@ -153,18 +164,34 @@ public class GlobalState extends Application {
         this.testGroups = testGroups;
     }
 
+    public Integer[] getUserImageList() { return userImageList; }
+
+    public void setUserImageList(Integer[] imageList) { this.userImageList = imageList; }
+
+    public String[] getUserNameList() { return userNameList; }
+
+    public void setUserNameList(String[] userNameList) { this.userNameList = userNameList; }
+
     public void createTestData() {
 
         testUsers = new ArrayList<User>();
         testOrgs = new ArrayList<Organization>();
         testGroups = new ArrayList<>();
 
-        testUsers.add(new User(testUsers.size(), "John.Doe@test.gmail.com","password","John", "Doe"));
-        testUsers.add(new User(testUsers.size(), "Amanda4Lang@test.gmail.com","password","Amanda", "Langley"));
-        testUsers.add(new User(testUsers.size(), "FrankHops@test.gmail.com","password","Frank", "Hops"));
-        testUsers.add(new User(testUsers.size(), "jane.b.Gerald@test.gmail.com","password","Jane", "Gerald"));
-        testUsers.add(new User(testUsers.size(), "joeshmoe@test.hotmail.com","password","Joe", "Hajk"));
-        testUsers.add(new User(testUsers.size(), "suzie@test.outlook.com","password","Sue", "Drake"));
+        testUsers.add(new User(testUsers.size(), "John.Doe@test.gmail.com","password","John", "Doe", R.drawable.image1));
+        testUsers.add(new User(testUsers.size(), "Amanda4Lang@test.gmail.com","password","Amanda", "Langley", R.drawable.image2));
+        testUsers.add(new User(testUsers.size(), "FrankHops@test.gmail.com","password","Frank", "Hops", R.drawable.image3));
+        testUsers.add(new User(testUsers.size(), "jane.b.Gerald@test.gmail.com","password","Jane", "Gerald", R.drawable.image4));
+        testUsers.add(new User(testUsers.size(), "joeshmoe@test.hotmail.com","password","Joe", "Hajk", R.drawable.image5));
+        testUsers.add(new User(testUsers.size(), "suzie@test.outlook.com","password","Sue", "Drake", R.drawable.image6));
+
+        userNameList = new String[testUsers.size()];
+        userImageList = new Integer[testUsers.size()];
+
+        for (int i = 0; i < testUsers.size(); i++) {
+            userNameList[i] = testUsers.get(i).getFirstName() + " " + testUsers.get(i).getLastName();
+            userImageList[i] = testUsers.get(i).getAvatar();
+        }
 
         testOrgs.add(new Organization(testOrgs.size(),"Portland State University", "Come learn something new at Portland State University!", testUsers.get(0)));
         testOrgs.add(new Organization(testOrgs.size(),"Vancouver Lego Guild", "A description", testUsers.get(0)));

@@ -30,7 +30,7 @@ public class User extends DatabaseEntity{
     protected boolean autoLogin;
     protected Date dateCreated;
     protected String avatarFileName;
-    protected Image avatar;
+    protected Integer avatar;
 
     private final String TABLE_NAME = "tblUser";
     private final String[] TABLE_COL_NAMES = {
@@ -100,7 +100,8 @@ public class User extends DatabaseEntity{
         }
 
     }
-    /**@apiNote Default Constructor
+
+    /**@apiNote Constructor
      * @param userId - int
      * @param user_email - String
      * @param user_password - String
@@ -125,6 +126,39 @@ public class User extends DatabaseEntity{
         /*TODO: populate avatar image*/
         this.dateCreated = new Date();
         this.m_tableName = TABLE_NAME; // Set the table name
+
+        if (!setPassword(user_password)) {
+            /*TODO: Cast an exception if the password setting fails*/
+        }
+
+    }
+
+    /**@apiNote Constructor
+     * @param userId - int
+     * @param user_email - String
+     * @param user_password - String
+     * @param fName - String
+     * @param lName - String
+     */
+    public User(int userId, String user_email, String user_password, String fName, String lName, int avatar) {
+        super();
+
+        email = user_email;
+
+        if (checkStringValue(fName)) {
+            this.firstName = fName;
+        }
+
+        if (checkStringValue(lName)) {
+            this.lastName = lName;
+        }
+
+        this.id = userId;
+        this.isActive = true;
+        /*TODO: populate avatar image*/
+        this.dateCreated = new Date();
+        this.m_tableName = TABLE_NAME; // Set the table name
+        this.avatar = avatar;
 
         if (!setPassword(user_password)) {
             /*TODO: Cast an exception if the password setting fails*/
@@ -199,6 +233,14 @@ public class User extends DatabaseEntity{
     /** Gets First Name field
      * @return First Name - String
      */
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
+
+    /** Gets First Name field
+     * @return First Name - String
+     */
     public String getFirstName() {
         return this.firstName;
     }
@@ -252,8 +294,16 @@ public class User extends DatabaseEntity{
      * @return null
      */
     public void setEmail(String email) {
-        /*TODO: Send user an email to verify that the email was changed*/
+        /*TODO: Send user an email to verify that the email w*as changed*/
         this.email = email;
+    }
+
+    public Integer getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Integer avatar) {
+        this.avatar = avatar;
     }
 
     /** Sends the user a confirmation email

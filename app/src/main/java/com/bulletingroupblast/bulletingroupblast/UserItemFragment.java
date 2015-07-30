@@ -20,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -35,6 +36,10 @@ import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
  * interface.
  */
 public class UserItemFragment extends Fragment implements AbsListView.OnItemClickListener {
+
+    private GlobalState gs;
+    private ListView list;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,9 +89,11 @@ public class UserItemFragment extends Fragment implements AbsListView.OnItemClic
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        gs = new GlobalState();
+
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new CustomUserList(getActivity(), gs.getTestUsers()); // Load with user objects
+//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override
