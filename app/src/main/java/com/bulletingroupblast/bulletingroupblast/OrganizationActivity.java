@@ -11,6 +11,7 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -33,12 +34,12 @@ public class OrganizationActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationOrganizationDrawerFragment mNavigationOrganizationDrawerFragment;
+    private CharSequence mTitle;    // Used to store the last screen title
+    protected int mOrgId = 0;         // Organization id that is passed from User Landing
+    protected Organization mOrganization;   // Organization Title
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
-    private String mOrganization;
+    public static final String GROUP_ID = "com.BulletinGroupBlast.BulletinGroupBlast.groupId";
+    public static final String ORG_ID = "com.BulletinGroupBlast.BulletinGroupBlast.orgId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +51,20 @@ public class OrganizationActivity extends ActionBarActivity
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationOrganizationDrawerFragment.setUp(
-                R.id.organization_navigation_drawer,
+        mNavigationOrganizationDrawerFragment.setUp(R.id.organization_navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-//        // Get the organization information
-//        Intent intent = getIntent();
-//        // Get the string that was passed through the intent
-//        String message = intent.getStringExtra(UserLandingActivity.EXTRA_MESSAGE);
-//        mTitle = message;   // Set the tile
+        // Get the organization information
+        Intent intent = getIntent();
+        // Get the string that was passed through the intent
+        mOrgId = intent.getIntExtra(UserLandingActivity.ORG_ID, 0);
+        mTitle = String.valueOf(mOrgId);   // Set the tile
 
     }
 
     /** The click event for the navagation drawer list items
      * open a fragment based on selection
-     * @param position
+     * @param position navigation menu item selected index
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -104,18 +104,18 @@ public class OrganizationActivity extends ActionBarActivity
         }
 
         // Check if fragment is valid
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
-            // Replace the fragment with selected fragment
-            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-        } else {
+        if (fragment == null) {
             Log.e("OrganizationActivity", "Error in creating fragment");
         }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Replace the fragment with selected fragment
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
-    /** Side menu selected item click
-     * @param number
+    /** Side menu selected item which changes the title
+     * @param number the selected menu item index from navigation menu
      */
     public void onSectionAttached(int number) {
         switch (number) {
@@ -217,107 +217,16 @@ public class OrganizationActivity extends ActionBarActivity
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
 
+        /** Set the organization session variable to the one selected
+         *
+         */
+        private void setOrganizationSessionVariable() {
+//            SharedPreferences settings = getSharedPreferences(MainActivity.SESSION_DATA, 0); // Shared Pref File
+//            SharedPreferences.Editor editor = settings.edit();  // Edit the file
+//            editor.putInt("selOrgId", mOrgId);          // Set the organization Id
+//            editor.commit();                                    // Commit the edits!
+        }
 
-//        public void onNavigationDrawerItemSelected(int position) {
-//            switch (position) {
-//                case 0:
-//                    // Overview
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 1:
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    // Create a new fragment and specify the list to show based on position
-//                    Fragment groupListFragment = new GroupItemFragment();
-//                    Bundle args = new Bundle();
-//                    //args.putInt(GroupItemFragment, position); // Args that needed to be passed
-//                    /*TODO: Pass the organization to fragment*/
-//                    groupListFragment.setArguments(args);
-//
-//                    // Insert the fragment by replacing any existing fragment
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.contentPanel, groupListFragment)
-//                            .commit();
-//
-//                    // Highlight the selected item, update the title, and close the drawer
-//                    mDrawerListView.setItemChecked(position, true);
-//                    getActionBar().setTitle(mTitleList[position]);
-//                    mDrawerLayout.closeDrawer(mDrawerListView);
-//
-//                    break;
-//                case 2:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 3:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 4:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 5:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                default:
-//                    // Overview
-//                    break;
-//            }
-//        }
-
-
-//        public void onFragmentInteraction(int position) {
-//
-//            Log.i("Nav. Drawer position", String.valueOf(position));
-//            switch (position) {
-//                case 0:
-//                    // Overview
-//
-//                    break;
-//                case 1:
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    /* Create a new fragment and specify the list to show based on position
-//                    Fragment groupListFragment = new GroupItemFragment();
-//                    Bundle args = new Bundle();
-//                    //args.putInt(GroupItemFragment, position); // Args that needed to be passed
-//                *//**//*TODO: Pass the organization to fragment*//**//*
-//                    groupListFragment.setArguments(args);
-//
-//                    // Insert the fragment by replacing any existing fragment
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.contentPanel, groupListFragment)
-//                            .commit();
-//
-//                    // Highlight the selected item, update the title, and close the drawer
-//                    mDrawerListView.setItemChecked(position, true);
-//                    getActionBar().setTitle(mTitleList[position]);
-//                    mDrawerLayout.closeDrawer(mDrawerListView);
-//                    break;
-//                case 2:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 3:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 4:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                case 5:
-//                    // Something
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//                default:
-//                    // Overview
-//                    Log.i("Nav. Drawer position", String.valueOf(position));
-//                    break;
-//            }
-//        }
     }
 
 }

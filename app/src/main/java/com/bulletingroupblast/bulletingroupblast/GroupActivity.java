@@ -11,11 +11,13 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,20 +29,17 @@ import android.support.v4.widget.DrawerLayout;
 public class GroupActivity extends ActionBarActivity
         implements NavigationGroupDrawerFragment.NavigationDrawerCallbacks {
 
-    int orgId = 0; // The passed organization id
-    Group newGroup; // The new group being created
+    private int orgId = 0;      // The passed organization id
+    private int groupId = 0;    // The passed group id
+    private Group newGroup;     // The new group being created
+    private Group mGroup;       // Current selected group
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationGroupDrawerFragment mNavigationGroupDrawerFragment;
+    private CharSequence mTitle;    // Used to store the last screen title
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
@@ -55,20 +54,65 @@ public class GroupActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         Intent prevIntent = getIntent();
-        orgId = prevIntent.getIntExtra("org_name",0); // Get the organization value from previous intent
+        orgId = prevIntent.getIntExtra(OrganizationActivity.ORG_ID,0);       // Get the org. id
+        groupId = prevIntent.getIntExtra(OrganizationActivity.GROUP_ID,0);   // Get the group id
+
+        Log.i("Organization ID:", String.valueOf(orgId));
+        Log.i("Group ID:", String.valueOf(groupId));
+
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        Fragment fragment = null;
+
+        // This is the click event switch for each menu item
+        switch (position) {
+            case 0:
+                // Overview Fragment
+                fragment = new GroupOverviewFragment();
+                break;
+            case 1:
+                // News list fragment
+                fragment = new NewsItemFragment();
+                break;
+            case 2:
+                // Events list fragment
+                fragment = new EventItemFragment();
+                break;
+            case 3:
+                // Chat fragment
+                fragment = new ChatFragment();
+                break;
+            case 4:
+                // Users fragment
+                fragment = new UserItemFragment();
+                break;
+            default:
+                // open the overview for default
+                fragment = new GroupOverviewFragment();
+                break;
+        }
+
+        // Check if fragment is valid
+        if (fragment == null) {
+            Log.e("GroupActivity", "Error in creating fragment");
+        }
+
+        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+
+        // Replace the fragment with selected fragment
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
+            case 0:
+                mTitle = getString(R.string.title_overview);
+                break;
             case 1:
                 mTitle = getString(R.string.title_news);
                 break;
@@ -80,6 +124,9 @@ public class GroupActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_users);
+                break;
+            default:
+                mTitle = getString(R.string.title_overview);
                 break;
         }
     }

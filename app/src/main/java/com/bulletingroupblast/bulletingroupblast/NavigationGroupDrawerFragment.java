@@ -9,7 +9,6 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -28,9 +27,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
 
 import java.util.ArrayList;
 
@@ -69,6 +70,10 @@ public class NavigationGroupDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private String[] mTitleList;
+    private ArrayList<NavListItemWithCounter> mNavItemsList;
+
+    private GlobalState gs = new GlobalState(); // Test data
 
     public NavigationGroupDrawerFragment() {
     }
@@ -76,9 +81,6 @@ public class NavigationGroupDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        GlobalState gs = new GlobalState();
-        gs.createTestData();
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -93,28 +95,8 @@ public class NavigationGroupDrawerFragment extends Fragment {
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
 
-        ArrayList<Group> testGroup = new ArrayList<>();
-        testGroup = gs.getTestGroups();
+        gs.createTestData(); // Generate test data
 
-        // Creating a list view object that refers to the list view on the page
-        ArrayList<String> listItems = new ArrayList<String>();
-        listItems.add("News");
-        listItems.add("Chat");
-        listItems.add("Members");
-
-        ListView orgListView = (ListView) this.getView().findViewById(R.id.lstGroupMenu); // ListView reference
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
-
-        orgListView.setAdapter(adapter);        // Attach the adapter to the listView
-        // Attach an on click event to the list
-        orgListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
-                // Show a message
-//                Toast.makeText(getBaseContext(), adView.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
-                onGroupMenuItemClick(adView, view, position, id);
-            }
-        });
     }
 
     @Override
@@ -128,24 +110,31 @@ public class NavigationGroupDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+                R.layout.fragment_group_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_news),
-                        getString(R.string.title_events),
-                        getString(R.string.title_chat),
-                        getString(R.string.title_users)
-                }));
+
+        mTitleList = new String[]{
+                getString(R.string.title_overview),
+                getString(R.string.title_news),
+                getString(R.string.title_events),
+                getString(R.string.title_chat),
+                getString(R.string.title_users)
+        };
+
+        SetNavigationListItems();
+
+        // Set the adapter
+        mDrawerListView.setAdapter(new NavListWithCounterAdapter(
+                getActionBar().getThemedContext(),mNavItemsList));
+
+        // Set the item position
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -343,5 +332,33 @@ public class NavigationGroupDrawerFragment extends Fragment {
                 // Do something
                 break;
         }
+    }
+
+    /** Sets the navigation item list
+     *
+     */
+    private void SetNavigationListItems() {
+
+//        getString(R.string.title_overview),
+//                getString(R.string.title_news),
+//                getString(R.string.title_events),
+//                getString(R.string.title_chat),
+//                getString(R.string.title_users)
+        mNavItemsList = new ArrayList<NavListItemWithCounter>();
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_dashboard_white, mTitleList[0]));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_view_list_white, mTitleList[1],"4"));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_event_white, mTitleList[2], "6"));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_question_answer_white, mTitleList[3]));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_account_circle_white, mTitleList[4], "1"));
     }
 }

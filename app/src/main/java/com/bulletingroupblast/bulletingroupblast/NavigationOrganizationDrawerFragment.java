@@ -9,8 +9,9 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
-import com.bulletingroupblast.bulletingroupblast.GroupItemFragment;
-import android.support.v4.app.FragmentManager;
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.customnavlistitem.*;
+
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -29,9 +30,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -70,6 +71,7 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
 
     // My Variables
+    private ArrayList<NavListItemWithCounter> mNavItemsList;
     private CharSequence mTitle;
     private String[] mTitleList;
     private Organization mSelectedOrg;
@@ -131,13 +133,20 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
             }
         });
 
+        /*navDrawerItemsList =
+
         // Set the list view adapter
-        ArrayAdapter menuList = new ArrayAdapter<String>(
+        ArrayAdapter menuListAdapter = new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                mTitleList);
-        mDrawerListView.setAdapter(menuList);
+                mTitleList);*/
+
+        SetNavigationListItems();
+
+        NavListWithCounterAdapter menuListAdapter = new NavListWithCounterAdapter(
+                getActionBar().getThemedContext(),mNavItemsList);
+        mDrawerListView.setAdapter(menuListAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         return mDrawerListView;
@@ -321,5 +330,37 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         public void onNavigationDrawerItemSelected(int position);
+    }
+
+
+    /** Sets the navigation item list
+     *
+      */
+    private void SetNavigationListItems() {
+        /*getString(R.string.title_overview),
+                getString(R.string.title_groups),
+                getString(R.string.title_news),
+                getString(R.string.title_events),
+                getString(R.string.title_calendar),
+                getString(R.string.title_users)*/
+        mNavItemsList = new ArrayList<NavListItemWithCounter>();
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_dashboard_white, mTitleList[0]));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_group_work_white, mTitleList[1],"5"));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_view_list_white, mTitleList[2],"2"));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_event_white, mTitleList[3], "10"));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_perm_contact_calendar_white, mTitleList[4]));
+
+        mNavItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_account_circle_white, mTitleList[5], "1"));
     }
 }

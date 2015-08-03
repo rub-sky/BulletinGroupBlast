@@ -10,6 +10,9 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
+import android.content.ContentUris;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -48,17 +51,9 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
+    private AbsListView mListView;          // The fragment's ListView/GridView.
+    private ListAdapter mAdapter;           //used to populate the ListView/GridView
+    private ArrayList<Group> mGroupList;    // The list of groups that will populate listview
 
     // TODO: Rename and change types of parameters
     public static GroupItemFragment newInstance(String param1, String param2) {
@@ -93,12 +88,12 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
          */
         gs = new GlobalState();
         gs.createTestData();
-        ArrayList<Group> testGroups = gs.getTestGroups();
+        mGroupList = gs.getTestGroups();
 
         ArrayList<String> listItems = new ArrayList<String>();  // List of items for list
 
-        for (int i = 0; i < testGroups.size(); i++) {           // Get all the group names
-            listItems.add(testGroups.get(i).getName());
+        for (int i = 0; i < mGroupList.size(); i++) {           // Get all the group names
+            listItems.add(mGroupList.get(i).getName());
         }
 
         // Create the list view adapter
@@ -112,8 +107,8 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
         View view = inflater.inflate(R.layout.fragment_group_item, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView = (AbsListView) view.findViewById(R.id.lvFragGroupItemList);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -140,11 +135,16 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(String.valueOf(position));
-        }
+//        if (null != mListener) {
+//            // Notify the active callbacks interface (the activity, if the
+//            // fragment is attached to one) that an item has been selected.
+//            mListener.onGroupItemListFragmentInteraction(String.valueOf(position));
+//        }
+
+        Intent intent = new Intent(getActivity(), GroupActivity.class);
+        intent.putExtra(OrganizationActivity.GROUP_ID, mGroupList.get(position).getId());    // Pass the group id
+        intent.putExtra(OrganizationActivity.ORG_ID, mGroupList.get(position).getId());    // Pass the group id
+        startActivity(intent);
     }
 
     /**
@@ -172,7 +172,7 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onGroupItemListFragmentInteraction(String id);
     }
 
     /** Updating the list view with a given position value

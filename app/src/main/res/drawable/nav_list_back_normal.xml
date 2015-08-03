@@ -1,0 +1,13 @@
+<!--
+ * Copyright © 2015 Ruben Piatnitsky
+ * This program is released under the "GNU license".
+ * Please see the file COPYING in this distribution for
+ * license terms.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="@color/list_background"
+        android:endColor="@color/list_background"
+        android:angle="90" />
+</shape>

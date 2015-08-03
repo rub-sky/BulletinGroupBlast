@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +28,9 @@ import java.util.ArrayList;
 
 
 public class UserLandingActivity extends ActionBarActivity {
-    public final static String EXTRA_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.OrganizationActivity";
+    public final static String ORG_ID = "com.BulletinGroupBlast.BulletinGroupBlast.OrganizationId";
     protected GlobalState gs;
+    private ArrayList<Organization> mOrgList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,36 +41,28 @@ public class UserLandingActivity extends ActionBarActivity {
         gs = (GlobalState) getApplication();
         gs.createTestData();
 
-
-
+        // Test data
         User testUser;
+
+        // Get the passed variables from previous intent
         Intent intentPrev = getIntent();
         int passedUserId = intentPrev.getIntExtra(MainActivity.USERID_MESSAGE, 0);
 
         // Test Data created for interface dev
         if (passedUserId == 0) {
-            testUser = new User("test.test@gmail.com", "password", "Test", "User");
+            testUser = new User(1, "test.test@gmail.com", "password", "Test", "User", R.drawable.image1);
         } else {
-            testUser = new User("John.Doe@gmail.com","password","John", "Doe");
+            testUser = new User(1, "John.Doe@gmail.com", "password", "John", "Doe", R.drawable.image2);
         }
-
-        Organization testOrg1 = new Organization("Portland State University", "A description", testUser);
-        Organization testOrg2 = new Organization("Vancouver Lego Guild", "A description", testUser);
-        Organization testOrg3 = new Organization("Smashing Car Show", "A description", testUser);
-        Organization testOrg4 = new Organization("Biker Gang", "A description", testUser);
 
         // Creating a list view object that refers to the list view on the page
         ArrayList<String> listItems = new ArrayList<String>();
-        listItems.add(testOrg1.getName());
-        listItems.add(testOrg2.getName());
-        listItems.add(testOrg3.getName());
-        listItems.add(testOrg4.getName());
 
-        ArrayList<Organization> orgs = gs.getTestOrgs();
-        for (int i = 0; i < orgs.size(); i++) {
-            listItems.add(orgs.get(i).getName());
+        // Load the test data organizations
+        mOrgList = gs.getTestOrgs();
+        for (int i = 0; i < mOrgList.size(); i++) {
+            listItems.add(mOrgList.get(i).getName());
         }
-
 
         ListView orgListView = (ListView) findViewById(R.id.lstOrganizations); // ListView reference
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listItems);  // Adapter for the list view which is given the string array
@@ -80,12 +74,16 @@ public class UserLandingActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> adView, View view, int position, long id) {
                 // Show a message
 //                Toast.makeText(getBaseContext(), adView.getItemAtPosition(position) + " is selected", Toast.LENGTH_LONG).show();
-                onOrgListItemClick(adView, view, position,id);
+                onOrgListItemClick(adView, view, position, id);
             }
         });
 
         TextView textViewToChange = (TextView) findViewById(R.id.lblUserEmail);   // This is a reference to the email text box
         textViewToChange.setText(testUser.getEmail());  // Change the email to what I want
+
+        // Set the image for the user
+        ImageView userAvatar = (ImageView) findViewById(R.id.imgViewUserAvatar);
+        userAvatar.setImageResource(testUser.getAvatar());
 
     }
 
@@ -112,10 +110,10 @@ public class UserLandingActivity extends ActionBarActivity {
     }
 
     /**
-     * Organization Listview item click event
-     * @param adView
-     * @param v
-     * @param position
+     * Organization ListView item click event
+     * @param adView adapter for the view
+     * @param v the view
+     * @param position the index of clicked list item
      * @param id
      */
     private void onOrgListItemClick(AdapterView<?> adView, View v, int position, long id) {
@@ -123,7 +121,7 @@ public class UserLandingActivity extends ActionBarActivity {
         try {
             Intent intent = new Intent(this, com.bulletingroupblast.bulletingroupblast.OrganizationActivity.class);     // Intent is for switching to a different activity
             String message = adView.getItemAtPosition(position).toString();
-            intent.putExtra(EXTRA_MESSAGE, message);        // Adds the text value to the intent
+            intent.putExtra(ORG_ID, mOrgList.get(position).getId());        // Adds the text value to the intent
             startActivity(intent);
         }
         catch (Exception e) {
