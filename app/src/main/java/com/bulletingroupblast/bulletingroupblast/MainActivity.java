@@ -10,6 +10,7 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,15 +20,16 @@ import android.widget.ProgressBar;
 
 public class MainActivity extends Activity {
 
-    private User userAccount;
+    private User mUserAccount;
     private DatabaseHandler bgb_DB;
     private Intent intentNewUser;
     private Intent intentSignIn;
     private Intent intentUserLanding;
-    public final static String USERID_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.UserLandingActivity";
+    public final static String USERID_MESSAGE = "com.BulletinGroupBlast.BulletinGroupBlast.UserId";
     private ProgressBar mProgress;
     private int mProgressStatus = 0;
     private Handler mHandler = new Handler();
+    public final static String SESSION_DATA = "SessionDataFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
-
 
 
         // Start lengthy operation in a background thread
@@ -103,8 +104,10 @@ public class MainActivity extends Activity {
         try {
             /*TODO: Check the local data stored on device*/
             /*TODO: Load User if one exists locally*/
-            userAccount = new User("John.Doe@gmail.com","password","John", "Doe");
-            userAccount.setAutoLogin(false);
+            mUserAccount = new User("John.Doe@gmail.com","password","John", "Doe");
+            mUserAccount.setAutoLogin(false);
+
+            setUserSessionVariable();
 
 //            result = 0;
             result = 1;
@@ -121,7 +124,7 @@ public class MainActivity extends Activity {
      */
     private void goToUserLanding() {
         Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
-        intentUserLanding.putExtra(USERID_MESSAGE, userAccount.getId());        // Adds the text value to the intent
+        intentUserLanding.putExtra(USERID_MESSAGE, mUserAccount.getId());        // Adds the text value to the intent
         startActivity(intentUserLanding);
         //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
     }
@@ -130,7 +133,7 @@ public class MainActivity extends Activity {
      *  Checks if the user needs to enter credentials or not nd redirects them to login or landing page
      */
     private void goToUserLogin() {
-        if (userAccount.getAutoLogin()) {
+        if (mUserAccount.getAutoLogin()) {
             goToUserLanding();  // Send the user to the landing page
         } else {
             // Send the user to the login page
@@ -146,5 +149,18 @@ public class MainActivity extends Activity {
         // Send the user to create a new user account
         Intent intentNewUser = new Intent(this, com.bulletingroupblast.bulletingroupblast.CreateUserAccountActivity.class);
         startActivity(intentNewUser);
+    }
+
+
+    /** Sets the User variable in the shared preferences
+     *
+     */
+    public void setUserSessionVariable() {
+
+        SharedPreferences settings = getSharedPreferences(SESSION_DATA, 0); // Shared Pref File
+        SharedPreferences.Editor editor = settings.edit();  // Edit the file
+        editor.putInt("userId", mUserAccount.getId());      // Set the User Id
+        editor.commit();                                    // Commit the edits!
+
     }
 }

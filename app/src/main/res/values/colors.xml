@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="list_background" type="color">#ABABAB</item>
+    <item name="list_background_pressed" type="color">#CDCDCD</item>
+
+    <integer-array name="bgb_colors">
+        <item>@color/list_background</item>
+        <item>@color/list_background_pressed</item>
+    </integer-array>
+
+</resources>
