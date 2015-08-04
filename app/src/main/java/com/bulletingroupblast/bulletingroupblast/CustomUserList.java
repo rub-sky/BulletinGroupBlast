@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
+
 import java.util.ArrayList;
 
 

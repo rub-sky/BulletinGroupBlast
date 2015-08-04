@@ -1,13 +1,13 @@
-package com.bulletingroupblast.bulletingroupblast;
-
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
  * Please see the file COPYING in this distribution for
  * license terms.
- * <p>
- * Created by Ruben Piatnitsky on 7/6/15.
  */
+
+package com.bulletingroupblast.bulletingroupblast.Entities;
+
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
 
 
 public class Notification extends DatabaseEntity {
@@ -19,6 +19,6 @@ public class Notification extends DatabaseEntity {
     public Notification() {
         super();
 
-        this.m_tableName = TABLE_NAME;
+        this.mTableName = TABLE_NAME;
     }
 }

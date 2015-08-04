@@ -29,6 +29,12 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Application;
+
+import com.bulletingroupblast.bulletingroupblast.Entities.Category;
+import com.bulletingroupblast.bulletingroupblast.Entities.Group;
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -177,6 +183,7 @@ public class GlobalState extends Application {
         testUsers = new ArrayList<User>();
         testOrgs = new ArrayList<Organization>();
         testGroups = new ArrayList<>();
+        Category cat = new Category();
 
         testUsers.add(new User(testUsers.size(), "John.Doe@test.gmail.com","password","John", "Doe", R.drawable.image1));
         testUsers.add(new User(testUsers.size(), "Amanda4Lang@test.gmail.com","password","Amanda", "Langley", R.drawable.image2));
@@ -202,12 +209,14 @@ public class GlobalState extends Application {
         testOrgs.add(new Organization(testOrgs.size(),"Gun Club Van", "Gun lovers of Vancouver coming together to learn more on gun safety and use", testUsers.get(3)));
         testOrgs.add(new Organization(testOrgs.size(),"Portland International Raceway", "Come race with us on our track!", testUsers.get(2)));
 
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(0).getId(),"Alumni","Portland State Alumni","Group Category PSU 1", testUsers.get(0)));
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(0).getId(),"Rocket Club","PSU Engineering Rocket Club","Engineering", testUsers.get(0)));
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(1).getId(),"Teenager Lego Builders","Lego builders that are teenagers","Teenager Builders", testUsers.get(0)));
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(1).getId(),"Adult Lego Builders","Older Lego Builders","Adult", testUsers.get(0)));
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(2).getId(),"Baseball Bat Smashers","People who love to smash with a baseball bat","Baseball Bat", testUsers.get(1)));
-        testGroups.add(new Group(testGroups.size(),testOrgs.get(2).getId(),"Crow Bar Smashers","Love to smash things with a crow bar.","Crow Bar", testUsers.get(1)));
+
+
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(0).getId(),"Alumni","Portland State Alumni",cat, testUsers.get(0)));
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(0).getId(),"Rocket Club","PSU Engineering Rocket Club",cat, testUsers.get(0)));
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(1).getId(),"Teenager Lego Builders","Lego builders that are teenagers",cat, testUsers.get(0)));
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(1).getId(),"Adult Lego Builders","Older Lego Builders",cat, testUsers.get(0)));
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(2).getId(),"Baseball Bat Smashers","People who love to smash with a baseball bat",cat, testUsers.get(1)));
+        testGroups.add(new Group(testGroups.size(),testOrgs.get(2).getId(),"Crow Bar Smashers","Love to smash things with a crow bar.",cat, testUsers.get(1)));
 
 
 

@@ -11,7 +11,6 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
+
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 
 
 public class OrganizationActivity extends ActionBarActivity
@@ -34,13 +34,18 @@ public class OrganizationActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationOrganizationDrawerFragment mNavigationOrganizationDrawerFragment;
-    private CharSequence mTitle;    // Used to store the last screen title
-    protected int mOrgId = 0;         // Organization id that is passed from User Landing
+    private CharSequence mTitle;            // Used to store the last screen title
+    private String[] mTitleList;            // The lsit of titles
+    protected int mOrgId = 0;               // Organization id that is passed from User Landing
     protected Organization mOrganization;   // Organization Title
 
     public static final String GROUP_ID = "com.BulletinGroupBlast.BulletinGroupBlast.groupId";
     public static final String ORG_ID = "com.BulletinGroupBlast.BulletinGroupBlast.orgId";
 
+    /** The activty create event
+     *
+     * @param savedInstanceState bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +65,21 @@ public class OrganizationActivity extends ActionBarActivity
         mOrgId = intent.getIntExtra(UserLandingActivity.ORG_ID, 0);
         mTitle = String.valueOf(mOrgId);   // Set the tile
 
+        // Load the title array
+        mTitleList = new String[] {
+                getString(R.string.title_overview),
+                getString(R.string.title_groups),
+                getString(R.string.title_news),
+                getString(R.string.title_events),
+                getString(R.string.title_calendar),
+                getString(R.string.title_users)
+        };
+
+        // Load the organization data
+
     }
 
-    /** The click event for the navagation drawer list items
+    /** The click event for the navigation drawer list items
      * open a fragment based on selection
      * @param position navigation menu item selected index
      */
@@ -120,22 +137,22 @@ public class OrganizationActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_overview);
+                mTitle = mTitleList[0];
                 break;
             case 2:
-                mTitle = getString(R.string.title_groups);
+                mTitle = mTitleList[1];
                 break;
             case 3:
-                mTitle = getString(R.string.title_news);
+                mTitle = mTitleList[2];
                 break;
             case 4:
-                mTitle = getString(R.string.title_events);
+                mTitle = mTitleList[3];
                 break;
             case 5:
-                mTitle = getString(R.string.title_calendar);
+                mTitle = mTitleList[4];
                 break;
             case 6:
-                mTitle = getString(R.string.title_users);
+                mTitle = mTitleList[5];
                 break;
         }
     }

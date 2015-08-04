@@ -7,9 +7,11 @@
  * Created by Ruben Piatnitsky on 7/21/15.
  */
 
-package com.bulletingroupblast.bulletingroupblast;
+package com.bulletingroupblast.bulletingroupblast.Entities;
 
 import android.util.Log;
+
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 /**
  * This class is the chat class that stores the chat data
  */
-public class Chat extends DatabaseEntity{
+public class Chat extends DatabaseEntity {
     protected String topic;
     protected ArrayList<ChatMessage> messages;
     protected Timestamp CreatedDate;
@@ -42,7 +44,7 @@ public class Chat extends DatabaseEntity{
         this.group_id = group_id;
         this.initiator_id = initiator;
 
-        this.m_tableName = TABLE_NAME;
+        this.mTableName = TABLE_NAME;
     }
 
     /** Gets the chat Topic
@@ -90,13 +92,15 @@ public class Chat extends DatabaseEntity{
 
     /** Saves the message to the database
      */
-    public void save() {
+    public boolean save() {
         try {
 
             /*TODO: Save message to the database*/
         } catch (Exception ex) {
             Log.e(ex.getCause().toString(), ex.getMessage());
         }
+
+        return true;
     }
 
     /** Delete the current chat from the database

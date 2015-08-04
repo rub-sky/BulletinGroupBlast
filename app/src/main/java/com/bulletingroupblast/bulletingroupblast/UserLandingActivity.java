@@ -9,8 +9,9 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
-import com.bulletingroupblast.bulletingroupblast.Organization;
-import com.bulletingroupblast.bulletingroupblast.User;
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;

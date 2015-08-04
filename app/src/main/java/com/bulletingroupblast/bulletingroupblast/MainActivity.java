@@ -17,6 +17,8 @@ import android.util.Log;
 import android.app.Activity;
 import android.widget.ProgressBar;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
+
 
 public class MainActivity extends Activity {
 

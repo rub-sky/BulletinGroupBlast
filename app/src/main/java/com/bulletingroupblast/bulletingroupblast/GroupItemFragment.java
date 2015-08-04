@@ -9,10 +9,7 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
-import android.app.Activity;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
+import com.bulletingroupblast.bulletingroupblast.Entities.Group;
 
 /**
  * A fragment representing a list of Items.

@@ -25,7 +25,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
 import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
+
+import java.util.ArrayList;
 
 
 /**
@@ -41,7 +45,10 @@ public class OrganizationOverviewFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    protected ArrayAdapter mAdapter;
+    private ArrayList<NavListItemWithCounter> mOverviewItemsList;
+    private String[] mTitleList;
+//    protected ArrayAdapter mAdapter;
+    protected NavListWithCounterAdapter mAdapter;
     protected ListView mListView;
 
     // TODO: Rename and change types of parameters
@@ -80,12 +87,23 @@ public class OrganizationOverviewFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        // Set the title list
+        mTitleList = new String[] {
+                getString(R.string.title_groups),
+                getString(R.string.title_news),
+                getString(R.string.title_events),
+                getString(R.string.title_calendar),
+                getString(R.string.title_users)
+        };
+
+        // Set the listview
+        SetOverViewListItems();
 
     }
 
     /** The on Create View Event for fragment
      *
-     * @param inflater
+     * @param inflater {@link:LayoutInflater}
      * @param container
      * @param savedInstanceState
      * @return
@@ -95,8 +113,9 @@ public class OrganizationOverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_organization_overview, container, false);
 
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+//        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new NavListWithCounterAdapter(getActivity(), mOverviewItemsList);
 
         if (view != null) { // Check if the view is valid
             // Set the adapter
@@ -178,6 +197,34 @@ public class OrganizationOverviewFragment extends Fragment {
         catch (Exception e) {
 //            Toast.makeText(v.g(), e.getMessage().toString(), Toast.LENGTH_LONG).show(); // Show a message in toast
         }
+    }
+
+    /** Sets the overview item list
+     *
+     */
+    private void SetOverViewListItems() {
+        /*getString(R.string.title_overview),
+                getString(R.string.title_groups),
+                getString(R.string.title_news),
+                getString(R.string.title_events),
+                getString(R.string.title_calendar),
+                getString(R.string.title_users)*/
+        mOverviewItemsList = new ArrayList<NavListItemWithCounter>();
+
+        mOverviewItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_group_work_white, mTitleList[0],"5"));
+
+        mOverviewItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_view_list_white, mTitleList[1],"2"));
+
+        mOverviewItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_event_white, mTitleList[2], "10"));
+
+        mOverviewItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_perm_contact_calendar_white, mTitleList[3]));
+
+        mOverviewItemsList.add(new NavListItemWithCounter(
+                R.drawable.ic_account_circle_white, mTitleList[4], "1"));
     }
 
 }

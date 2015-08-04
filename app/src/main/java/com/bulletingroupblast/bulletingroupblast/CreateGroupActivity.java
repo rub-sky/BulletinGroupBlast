@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.Group;
+
 
 public class CreateGroupActivity extends ActionBarActivity {
     protected Group newGroup; // This is the new group that will be created

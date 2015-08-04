@@ -7,17 +7,22 @@
  * Created by Ruben Piatnitsky on 7/6/15.
  */
 
-package com.bulletingroupblast.bulletingroupblast;
+package com.bulletingroupblast.bulletingroupblast.Entities;
+
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
 
 import java.sql.Timestamp;
 
 
-public class Announcement extends DatabaseEntity{
+public class Announcement extends DatabaseEntity {
 
     protected String title;
     protected String content;
     protected Timestamp created;
     protected User postedBy;
+
+    protected int organizationId = 0;
+    protected int groupId = 0;
 
     private final String TABLE_NAME = "tblAnnouncement";
 
@@ -26,7 +31,7 @@ public class Announcement extends DatabaseEntity{
     public Announcement() {
         super();
 
-        this.m_tableName = TABLE_NAME;
+        this.mTableName = TABLE_NAME;
     }
 
     /** Constructor with title, content, and  user posting
@@ -98,4 +103,26 @@ public class Announcement extends DatabaseEntity{
     public void setPostedBy(User postedBy) {
         this.postedBy = postedBy;
     }
+
+    /** Get the organization Id
+     * @return int of organization id
+     */
+    public int getOrganizationId() { return organizationId; }
+
+    /** Set the organization Id
+     * @param organizationId int
+     */
+    public void setOrganizationId(int organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    /** Get the Group id
+     * @return int
+     */
+    public int getGroupId() { return groupId; }
+
+    /** Set the group Id
+     * @param groupId int
+     */
+    public void setGroupId(int groupId) { this.groupId = groupId; }
 }

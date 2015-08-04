@@ -13,12 +13,14 @@ import android.util.Log;
 
 public abstract class DatabaseEntity {
     protected int id;
-    protected String m_tableName;
+    protected String mTableName;
+    protected String[] mTableColNames;
+    protected String[] mTableColTypes;
 
     /** Default constructor
      */
     protected DatabaseEntity() {
-        m_tableName = null;
+        mTableName = null;
     }
 
 
@@ -29,22 +31,45 @@ public abstract class DatabaseEntity {
         return id;
     }
 
+    /** Sets the object id
+     * @param id of the object
+     */
+    protected void setId(int id) { this.id = id; }
+
     /** Getst the table name of the object
      * @return String
      */
     public String getTableName() {
-        return m_tableName;
+        return mTableName;
+    }
+
+    /** Get the table column names
+     * @return string array
+     */
+    public String[] getTableColNames() {
+        return mTableColNames;
+    }
+
+    /** Get table column types
+     * @return string array
+     */
+    public String[] getTableColTypes() {
+        return mTableColTypes;
     }
 
     /** Save the organization to the database
-     *
      */
-    public void save() {
+    public boolean save() {
+        boolean result;
         try {
             /*TODO: Save the organization to the database*/
+            result = true;
         } catch (Exception ex) {
             Log.e(ex.getCause().toString(),ex.getMessage());
+            result = false;
         }
+
+        return result;
     }
 
     /** Delete the Organization from the database
@@ -89,7 +114,7 @@ public abstract class DatabaseEntity {
     public String InsertString() {
         String result = "Insert";
         /*TODO: Generate an INSERT statement*/
-        String qry = "INSERT into " + this.m_tableName + " values() where id=" + this.id;
+        String qry = "INSERT into " + this.mTableName + " values() where id=" + this.id;
 
         return result;
     }
@@ -98,13 +123,13 @@ public abstract class DatabaseEntity {
      * @return SQL String for Delete
      */
     public String DeleteString() {
-        return "Delete from " + this.m_tableName + " where id="+this.id;
+        return "Delete from " + this.mTableName + " where id="+this.id;
     }
 
-    /** Populates the user from the database
+    /** Populates the data from the database
      * @return boolean - true if successful, false otherwise
      */
-    public String getDataFromDB() {
-        return "select * from " + this.m_tableName+ " where id="+this.id;
+    public String getData() {
+        return "select * from " + this.mTableName+ " where id="+this.id;
     }
 }

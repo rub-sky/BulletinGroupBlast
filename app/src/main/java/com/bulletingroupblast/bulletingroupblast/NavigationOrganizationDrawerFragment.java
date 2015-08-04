@@ -9,6 +9,7 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.*;
 
@@ -76,7 +77,7 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
     private String[] mTitleList;
     private Organization mSelectedOrg;
 
-    public NavigationOrganizationDrawerFragment() {
+        public NavigationOrganizationDrawerFragment() {
     }
 
     @Override

@@ -7,13 +7,15 @@
  * Created by Ruben Piatnitsky on 7/21/15.
  */
 
-package com.bulletingroupblast.bulletingroupblast;
+package com.bulletingroupblast.bulletingroupblast.Entities;
 
 import android.util.Log;
 
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
+
 import java.sql.Timestamp;
 
-public class ChatMessage extends DatabaseEntity{
+public class ChatMessage extends DatabaseEntity {
     protected int chat_id;
     protected Timestamp posted_date;
     protected String message;
@@ -37,7 +39,7 @@ public class ChatMessage extends DatabaseEntity{
         this.message = message;
         this.userId = userId;
 
-        this.m_tableName = TABLE_NAME;
+        this.mTableName = TABLE_NAME;
     }
 
     /** Get the message posted date

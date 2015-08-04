@@ -8,19 +8,22 @@
  *
  */
 
-package com.bulletingroupblast.bulletingroupblast;
+package com.bulletingroupblast.bulletingroupblast.Entities;
 
-import android.media.Image;
-import com.bulletingroupblast.bulletingroupblast.Organization;
-import java.sql.Array;
+import android.content.ContentValues;
+import android.util.Log;
+
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
+import com.bulletingroupblast.bulletingroupblast.DatabaseHandler;
+import com.bulletingroupblast.bulletingroupblast.Entities.Group;
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.SecurityUtil;
+
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Map;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-public class User extends DatabaseEntity{
+public class User extends DatabaseEntity {
     protected String email;
     protected String password;
     protected String salt;
@@ -32,8 +35,8 @@ public class User extends DatabaseEntity{
     protected String avatarFileName;
     protected Integer avatar;
 
-    private final String TABLE_NAME = "tblUser";
-    private final String[] TABLE_COL_NAMES = {
+    protected final String TABLE_NAME = "tblUser";
+    protected final String[] TABLE_COL_NAMES = {
             "id",
             "email",
             "password",
@@ -41,11 +44,11 @@ public class User extends DatabaseEntity{
             "firstName",
             "lastName",
             "isActive",
-            "autoLogon",
+            "autoLogin",
             "dateCreated",
             "avatarFileName"
     };
-    private final String[] TABLE_COL_TYPES = {
+    protected final String[] TABLE_COL_TYPES = {
             "INTEGER PRIMARY KEY",
             "VARCHAR(100)",
             "VARCHAR(300)",
@@ -57,6 +60,7 @@ public class User extends DatabaseEntity{
             "DATETIME",
             "TEXT"
     };
+
     private final int PASSWORD_MIN_LENGTH = 8;
     private final int PASSWORD_MAX_LENGTH = 64;
 
@@ -65,9 +69,9 @@ public class User extends DatabaseEntity{
     // List of Groups that this user belongs to
     private ArrayList<Group> groupList = new ArrayList<Group>();
 
-    // The mapping of columns to their types
     // Used to create the table in the database
-    protected Map<String, String> tableMap;
+    protected Map<String, String> tableMap;     // The mapping of columns to their types
+
 
     /**@apiNote Default Constructor
      * @param user_email - String
@@ -77,6 +81,11 @@ public class User extends DatabaseEntity{
      */
     public User(String user_email, String user_password, String fName, String lName) {
         super();
+
+        // Set the DB variable values
+        this.mTableName = TABLE_NAME;
+        this.mTableColNames = TABLE_COL_NAMES;
+        this.mTableColTypes = TABLE_COL_TYPES;
 
         email = user_email;
 
@@ -89,11 +98,8 @@ public class User extends DatabaseEntity{
         }
 
         this.isActive = true;
-
         /*TODO: populate avatar image*/
-
         this.dateCreated = new Date();
-        this.m_tableName = TABLE_NAME; // Set the table name
 
         if (!setPassword(user_password)) {
             /*TODO: Cast an exception if the password setting fails*/
@@ -111,6 +117,11 @@ public class User extends DatabaseEntity{
     public User(int userId, String user_email, String user_password, String fName, String lName) {
         super();
 
+        // Set the DB variable values
+        this.mTableName = TABLE_NAME;
+        this.mTableColNames = TABLE_COL_NAMES;
+        this.mTableColTypes = TABLE_COL_TYPES;
+
         email = user_email;
 
         if (checkStringValue(fName)) {
@@ -125,7 +136,7 @@ public class User extends DatabaseEntity{
         this.isActive = true;
         /*TODO: populate avatar image*/
         this.dateCreated = new Date();
-        this.m_tableName = TABLE_NAME; // Set the table name
+        this.mTableName = TABLE_NAME; // Set the table name
 
         if (!setPassword(user_password)) {
             /*TODO: Cast an exception if the password setting fails*/
@@ -143,6 +154,11 @@ public class User extends DatabaseEntity{
     public User(int userId, String user_email, String user_password, String fName, String lName, int avatar) {
         super();
 
+        // Set the DB variable values
+        this.mTableName = TABLE_NAME;
+        this.mTableColNames = TABLE_COL_NAMES;
+        this.mTableColTypes = TABLE_COL_TYPES;
+
         email = user_email;
 
         if (checkStringValue(fName)) {
@@ -157,7 +173,6 @@ public class User extends DatabaseEntity{
         this.isActive = true;
         /*TODO: populate avatar image*/
         this.dateCreated = new Date();
-        this.m_tableName = TABLE_NAME; // Set the table name
         this.avatar = avatar;
 
         if (!setPassword(user_password)) {
@@ -208,7 +223,8 @@ public class User extends DatabaseEntity{
         boolean success = false;
 
         if (newOrganization != null) {
-            this.organizationList.add(newOrganization);
+            newOrganization.save();                         // Save the organization to the database
+            this.organizationList.add(newOrganization);     // Add the organization to the users list
             success = true;
         }
 
@@ -294,7 +310,7 @@ public class User extends DatabaseEntity{
      * @return null
      */
     public void setEmail(String email) {
-        /*TODO: Send user an email to verify that the email w*as changed*/
+        /*TODO: Send user an email to verify that the email was changed*/
         this.email = email;
     }
 
@@ -321,5 +337,58 @@ public class User extends DatabaseEntity{
         }
 
         return result;
+    }
+
+    /** Generate a value list to save into the database
+     * @return ContentValues of fields in TABLE_COL_NAMES
+     */
+    public ContentValues getInsertFieldValues() {
+        /* TABLE COLUMN NAMES
+            "id",
+            "email",
+            "password",
+            "salt",
+            "firstName",
+            "lastName",
+            "isActive",
+            "autoLogon",
+            "dateCreated",
+            "avatarFileName"
+        */
+        ContentValues values = new ContentValues();
+
+        // Set the values
+        values.put(TABLE_COL_NAMES[1], this.email);
+        values.put(TABLE_COL_NAMES[2], this.password);
+        values.put(TABLE_COL_NAMES[3], this.salt);
+        values.put(TABLE_COL_NAMES[4], this.firstName);
+        values.put(TABLE_COL_NAMES[5], this.lastName);
+        values.put(TABLE_COL_NAMES[6], this.isActive);
+        values.put(TABLE_COL_NAMES[7], this.autoLogin);
+        values.put(TABLE_COL_NAMES[8], this.dateCreated.toString());
+        values.put(TABLE_COL_NAMES[9], this.avatarFileName);
+
+        return values;
+    }
+
+    /** Get the table name
+     * @return string table name
+     */
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    /** Get the table column names
+     * @return string array
+     */
+    public String[] getTableColumnNames() {
+        return TABLE_COL_NAMES;
+    }
+
+    /** Get the table column types
+     * @return string array
+     */
+    public String[] getTableColumnTypes() {
+        return TABLE_COL_TYPES;
     }
 }

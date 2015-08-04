@@ -9,6 +9,7 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.*;
 import android.database.sqlite.*;
@@ -61,22 +62,22 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     /*TODO: Write the database class that will handle the database requests*/
 
     /** This function inserts into the database
-     * @param qry takes in an insert query
+     * @param values are a list of table column names and their new values
+     * @param table is the table name
      * @return an int
      */
-    public int Insert(String qry) {
-        int result = 0;
+    public boolean Insert(ContentValues values, String table) {
+        boolean result;
 
-        /*SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName()); // Contact Name
-        values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone Number
-
-        // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
-        db.close(); // Closing database connection
-        */
+        try {
+            db = this.getWritableDatabase();
+            db.insert(table, null, values);     // Insert the values
+            db.close();                         // Closing database connection
+            result = true;                      // Success
+        } catch (Exception e) {
+            Log.e(e.getCause().toString(), e.getMessage());
+            result = false;
+        }
 
         return result;
     }
@@ -101,6 +102,27 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return result;
     }
 
+    /** Gets one item from the database and returns it populated
+     * @param obj DatabaseEntity object
+     * @param id the id of the object
+     * @return object
+     */
+    public Object getObject(DatabaseEntity obj, int id) {
+        db = this.getReadableDatabase();
+        String table = obj.getTableName();
+        String[] cols = obj.getTableColNames();
+
+        Cursor cursor = db.query(table, cols, cols[0] + "=" + id,
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        /* TODO: Constructor for each entity type with */
+        Object newObj = new Object(); /*Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2));*/
+        // return contact
+        return newObj;
+    }
 
     /** Gets a list of records from the database
      *

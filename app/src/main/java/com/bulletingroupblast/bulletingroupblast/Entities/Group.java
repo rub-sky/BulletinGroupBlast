@@ -3,28 +3,49 @@
  * This program is released under the "GNU license".
  * Please see the file COPYING in this distribution for
  * license terms.
- *
- * Created by Ruben Piatnitsky on 7/6/15.
  */
 
-package com.bulletingroupblast.bulletingroupblast;
+package com.bulletingroupblast.bulletingroupblast.Entities;
+
+import android.content.ContentValues;
 
 import java.util.ArrayList;
 import java.util.Date;
-import com.bulletingroupblast.bulletingroupblast.User;
+
+import com.bulletingroupblast.bulletingroupblast.DatabaseEntity;
 
 
 public class Group extends DatabaseEntity {
     protected String name;
     protected String description;
-    protected String category;
-    /*TODO: Create ENUM for category*/
+    protected int categoryId;
     protected Date created;
+    protected int orgId;    // The organization id that this group belongs to
+    protected boolean isActive = true;
+
+
     protected ArrayList members;
     protected ArrayList admins;
-    protected int orgId;    // The organization id that this group belongs to
 
     private final String TABLE_NAME = "tblOrganization";
+    protected final String[] TABLE_COL_NAMES = {
+            "id",
+            "name",
+            "description",
+            "categoryId",
+            "created",
+            "orgId",
+            "isActive"
+    };
+    protected final String[] TABLE_COL_TYPES = {
+            "INTEGER PRIMARY KEY",
+            "VARCHAR(150)",
+            "VARCHAR(300)",
+            "INTEGER",
+            "DATETIME",
+            "INTEGER",
+            "BOOLEAN DEFAULT 1"
+    };
 
     /*TODO: Add Chat, Announcement to variables*/
     /*TODO: avatar*/
@@ -39,7 +60,7 @@ public class Group extends DatabaseEntity {
         this.id = 0;
         this.name = name;
         this.description = description;
-        this.m_tableName = TABLE_NAME;
+        this.mTableName = TABLE_NAME;
 
         /*TODO: Initialize members, admins, chat and announcement*/
         this.admins = new ArrayList<User>();
@@ -53,14 +74,14 @@ public class Group extends DatabaseEntity {
      * @param description string
      * @param cat category string
      */
-    public Group(int grpId, int orgId, String name, String description, String cat, User admin) {
+    public Group(int grpId, int orgId, String name, String description, Category cat, User admin) {
         super();
 
         this.id = grpId;
         this.orgId = orgId;
         this.name = name;
         this.description = description;
-        this.category = cat;
+        this.categoryId = cat.getId();
 
         /*TODO: Initialize members, admins, chat and announcement*/
         this.admins = new ArrayList<User>();
@@ -78,7 +99,7 @@ public class Group extends DatabaseEntity {
     }
 
     /** Sets the group name
-     * @param name
+     * @param name string
      */
     public void setName(String name) {
         this.name = name;
@@ -92,24 +113,24 @@ public class Group extends DatabaseEntity {
     }
 
     /** Sets the group description
-     * @param description
+     * @param description string
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /** Gets the category of the group
-     * Returns group category
+     * @return int group category
      */
-    public String getCategory() {
-        return category;
+    public int getCategory() {
+        return categoryId;
     }
 
     /** Sets the category of the group
-     * @param category
+     * @param category int
      */
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(Category category) {
+        this.categoryId = category.getId();
     }
 
     /** Gets the created date of the group
@@ -162,5 +183,52 @@ public class Group extends DatabaseEntity {
      */
     public void setOrgId(int orgId) {
         this.orgId = orgId;
+    }
+
+    /** Generate a value list to save into the database
+     * @return ContentValues of fields in TABLE_COL_NAMES
+     */
+    public ContentValues getInsertFieldValues() {
+        /* TABLE COLUMN NAMES
+            "id",  <----- DOES NOT GET INCLUDED
+            "name",
+            "description",
+            "categoryId",
+            "created",
+            "orgId",
+            "isActive"
+        */
+        ContentValues values = new ContentValues();
+
+        // Set the values
+        values.put(TABLE_COL_NAMES[1], this.name);
+        values.put(TABLE_COL_NAMES[2], this.description);
+        values.put(TABLE_COL_NAMES[4], this.categoryId);
+        values.put(TABLE_COL_NAMES[5], this.created.toString());
+        values.put(TABLE_COL_NAMES[6], this.orgId);
+        values.put(TABLE_COL_NAMES[7], this.isActive);
+
+        return values;
+    }
+
+    /** Get the table name
+     * @return string table name
+     */
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    /** Get the table column names
+     * @return string array
+     */
+    public String[] getTableColumnNames() {
+        return TABLE_COL_NAMES;
+    }
+
+    /** Get the table column types
+     * @return string array
+     */
+    public String[] getTableColumnTypes() {
+        return TABLE_COL_TYPES;
     }
 }
