@@ -26,5 +26,7 @@ In-Progress:
   - Database
 
 
+See LICENSE.txt for detail license information.
+
 How to Build the BGB Project:
    - APK
