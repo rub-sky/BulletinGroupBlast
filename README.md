@@ -1,5 +1,6 @@
 Copyright © 2015 Ruben Piatnitsky
 
+
 # BulletinGroupBlast
 The BulletinGroupBlast application provides an interface for organizations to make a bulletin board announcement system coupled with an event calendar. The organization can create groups for different interests. The app will allow users to download the app and create a profile. Each user can have multiple organizations they can join. If they know their organization, then they request permission to receive access to the organization’s bulletin slice. Once the administrator confirms the member, then the user can see all the groups within the organization. They can then:
 
@@ -11,10 +12,12 @@ The BulletinGroupBlast application provides an interface for organizations to ma
 
 The purpose is to provide an effective tool for small organizations, such as home school groups, churches, hobby groups and other nonprofit groups, to be able to centralize their announcements.
 
-Status of Project:
-
 Working Features:
   - A datastructure backend that allows storage and interfacing of the different entities
+    - Users
+    - Organization
+    - Groups
+    - Categories
   - Currently have an interface that loads a test user in and displays data related to the user
 
 In-Progress:
