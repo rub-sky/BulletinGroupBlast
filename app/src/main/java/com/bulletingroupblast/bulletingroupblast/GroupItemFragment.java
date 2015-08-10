@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 7/29/15.
@@ -9,9 +9,10 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 
 
 import com.bulletingroupblast.bulletingroupblast.Entities.Group;
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
 
 /**
  * A fragment representing a list of Items.
@@ -85,11 +88,14 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
          */
         gs = new GlobalState();
         gs.createTestData();
-        mGroupList = gs.getTestGroups();
+
+        User usr = gs.getCurrentUser();
+        Organization org = usr.getOrganizationByIndex(0);
+        mGroupList = org.getGroupList();
 
         ArrayList<String> listItems = new ArrayList<String>();  // List of items for list
 
-        for (int i = 0; i < mGroupList.size(); i++) {           // Get all the group names
+        for (int i = 0; i < mGroupList.size(); i++) {      // Get all the group names
             listItems.add(mGroupList.get(i).getName());
         }
 
@@ -140,7 +146,7 @@ public class GroupItemFragment extends Fragment implements AbsListView.OnItemCli
 
         Intent intent = new Intent(getActivity(), GroupActivity.class);
         intent.putExtra(OrganizationActivity.GROUP_ID, mGroupList.get(position).getId());    // Pass the group id
-        intent.putExtra(OrganizationActivity.ORG_ID, mGroupList.get(position).getId());    // Pass the group id
+        intent.putExtra(OrganizationActivity.ORG_ID, mGroupList.get(position).getOrgId());    // Pass the group id
         startActivity(intent);
     }
 

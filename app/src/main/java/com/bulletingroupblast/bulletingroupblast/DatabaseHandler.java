@@ -1,10 +1,8 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
- *
- * Created by Ruben Piatnitsky on 7/14/15.
  */
 
 package com.bulletingroupblast.bulletingroupblast;
@@ -175,8 +173,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         try {
             db = this.getReadableDatabase();
-
-
             Cursor cursor = db.rawQuery(qry, args); // Run the query
 
             // Check the cursor first

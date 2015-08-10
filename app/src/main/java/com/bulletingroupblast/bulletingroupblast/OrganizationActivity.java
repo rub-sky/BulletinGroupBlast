@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 7/21/15.
@@ -14,7 +14,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,10 +37,13 @@ public class OrganizationActivity extends ActionBarActivity
     private CharSequence mTitle;            // Used to store the last screen title
     private String[] mTitleList;            // The lsit of titles
     protected int mOrgId = 0;               // Organization id that is passed from User Landing
-    protected Organization mOrganization;   // Organization Title
+    protected Organization mOrganization;   // Organization that is selected
 
     public static final String GROUP_ID = "com.BulletinGroupBlast.BulletinGroupBlast.groupId";
     public static final String ORG_ID = "com.BulletinGroupBlast.BulletinGroupBlast.orgId";
+    private static final String ORG_ID2 = "orgId";
+    private static final String ORG_NAME = "orgName";
+
 
     /** The activty create event
      *
@@ -50,6 +53,9 @@ public class OrganizationActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization);
+
+        GlobalState gs = new GlobalState();
+        gs.createTestData();
 
         mNavigationOrganizationDrawerFragment = (NavigationOrganizationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.organization_navigation_drawer);
@@ -61,9 +67,11 @@ public class OrganizationActivity extends ActionBarActivity
 
         // Get the organization information
         Intent intent = getIntent();
-        // Get the string that was passed through the intent
+
+        // Get the values that were passed through the intent
         mOrgId = intent.getIntExtra(UserLandingActivity.ORG_ID, 0);
-        mTitle = String.valueOf(mOrgId);   // Set the tile
+        mOrganization = gs.getCurrentUser().getOrganizationById(mOrgId);    // Get the organization
+        mTitle = String.valueOf(mOrganization.getName());                   // Set the tile
 
         // Load the title array
         mTitleList = new String[] {
@@ -86,7 +94,9 @@ public class OrganizationActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = null;
+        android.app.Fragment fragment = null;
+        Bundle args = new Bundle();     // For passing arguments
+
 
         // This is the click event switch for each menu item
         switch (position) {
@@ -125,7 +135,14 @@ public class OrganizationActivity extends ActionBarActivity
             Log.e("OrganizationActivity", "Error in creating fragment");
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        // Pass organization id and name
+        args.putInt(ORG_ID2, mOrgId);
+        if (mOrganization != null) {
+            args.putString(ORG_NAME, mOrganization.getName());
+        }
+
+        fragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
 
         // Replace the fragment with selected fragment
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
@@ -243,6 +260,7 @@ public class OrganizationActivity extends ActionBarActivity
 //            editor.putInt("selOrgId", mOrgId);          // Set the organization Id
 //            editor.commit();                                    // Commit the edits!
         }
+
 
     }
 

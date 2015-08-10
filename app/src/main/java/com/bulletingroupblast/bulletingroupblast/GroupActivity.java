@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 7/20/15.
@@ -11,10 +11,13 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,15 +28,22 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.bulletingroupblast.bulletingroupblast.Entities.Group;
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
 
 
 public class GroupActivity extends ActionBarActivity
         implements NavigationGroupDrawerFragment.NavigationDrawerCallbacks {
 
+    private static final String GRP_ID = "grpId";
+    private static final String GRP_NAME = "grpName";
+
     private int orgId = 0;      // The passed organization id
     private int groupId = 0;    // The passed group id
     private Group newGroup;     // The new group being created
     private Group mGroup;       // Current selected group
+
+    private GlobalState gs; // For test data
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -47,6 +57,7 @@ public class GroupActivity extends ActionBarActivity
 
         mNavigationGroupDrawerFragment = (NavigationGroupDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+
         mTitle = getTitle();
 
         // Set up the drawer.
@@ -58,9 +69,22 @@ public class GroupActivity extends ActionBarActivity
         orgId = prevIntent.getIntExtra(OrganizationActivity.ORG_ID,0);       // Get the org. id
         groupId = prevIntent.getIntExtra(OrganizationActivity.GROUP_ID,0);   // Get the group id
 
-        Log.i("Organization ID:", String.valueOf(orgId));
-        Log.i("Group ID:", String.valueOf(groupId));
+        // Test data
+        gs = new GlobalState();
+        gs.createTestData();
+        User curUser = gs.getCurrentUser();
+        Organization curOrg = curUser.getOrganizationById(orgId);
 
+        // Load group data
+        if (groupId > 0 && curOrg != null) {
+            mGroup = curOrg.getGroupById(groupId);
+            if (mGroup != null) {
+                mTitle = mGroup.getName(); // Set the title
+            }
+        }
+
+        Log.i("GA Org ID:", String.valueOf(orgId));
+        Log.i("GA Group ID:", String.valueOf(groupId));
 
     }
 
@@ -68,6 +92,7 @@ public class GroupActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         Fragment fragment = null;
+        Bundle args = new Bundle();     // For passing arguments
 
         // This is the click event switch for each menu item
         switch (position) {
@@ -102,13 +127,22 @@ public class GroupActivity extends ActionBarActivity
             Log.e("GroupActivity", "Error in creating fragment");
         }
 
+        // Pass organization id and name
+        args.putInt(GRP_ID, groupId);
+        if (mGroup != null) {
+            args.putString(GRP_NAME, mGroup.getName());
+        }
+
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = this.getFragmentManager();
 
         // Replace the fragment with selected fragment
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
+    /** Side menu selected item which changes the title
+     * @param number the selected menu item index from navigation menu
+     */
     public void onSectionAttached(int number) {
         switch (number) {
             case 0:

@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  */
 
@@ -19,13 +19,14 @@ public class Category extends DatabaseEntity{
     protected boolean isActive = true;
 
     /** Default constructor
-     *
-     * @param type
-     * @param name
-     * @param desc
-     * @param orgId
+     * @param id record id
+     * @param type the category type
+     * @param name of the category
+     * @param desc description of the category
+     * @param orgId organization id
      */
-    public Category(String type, String name, String desc, int orgId) {
+    public Category(int id, String type, String name, String desc, int orgId) {
+        this.id = id;
         this.type = type;
         this.name = name;
         this.description = desc;

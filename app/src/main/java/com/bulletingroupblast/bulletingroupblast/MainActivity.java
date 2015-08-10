@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * @Author Ruben Piatnitsky
@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
     private int mProgressStatus = 0;
     private Handler mHandler = new Handler();
     public final static String SESSION_DATA = "SessionDataFile";
+    public GlobalState gs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class MainActivity extends Activity {
             }
         }).start();
 
+        gs = new GlobalState();
+        gs.createTestData();
     }
 
     /**
@@ -127,6 +130,7 @@ public class MainActivity extends Activity {
     private void goToUserLanding() {
         Intent intentUserLanding = new Intent(this, com.bulletingroupblast.bulletingroupblast.UserLandingActivity.class);     // Intent is for switching to a different activity
         intentUserLanding.putExtra(USERID_MESSAGE, mUserAccount.getId());        // Adds the text value to the intent
+        super.onResume();
         startActivity(intentUserLanding);
         //message = "SUCCESS - User " + newUser.getEmail() + " Created and Saved!";
     }
@@ -164,5 +168,9 @@ public class MainActivity extends Activity {
         editor.putInt("userId", mUserAccount.getId());      // Set the User Id
         editor.commit();                                    // Commit the edits!
 
+    }
+
+    public GlobalState getGlobalState() {
+        return gs;
     }
 }

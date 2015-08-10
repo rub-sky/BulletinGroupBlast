@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  */
 package com.bulletingroupblast.bulletingroupblast.Entities;
@@ -165,6 +165,49 @@ public class Organization extends DatabaseEntity {
         }
 
         return success;
+    }
+
+    /** Gets the organization by the index number
+     * @param index of the organization in the list
+     * @return Organization object
+     */
+    public Group getGroupByIndex(int index) {
+
+        // Check if any organizations exist
+        if (groupList.size() > 0) {
+            // If the index is in range then return it
+            if (index >= 0 && index < groupList.size()) {
+                return groupList.get(index);
+            }
+        }
+        return null;
+    }
+
+    /** Get the organization by id
+     * @param id of the organization
+     * @return organization if exists or null otherwise
+     */
+    public Group getGroupById(int id) {
+
+        // Check if any organizations exist
+        if (groupList.size() > 0) {
+            //Loop through all organizations
+            for (int i = 0; i < groupList.size(); i++) {
+                Group grp = groupList.get(i);
+                // Check if the id matches
+                if (grp.getId() == id) {
+                    return grp;     // match
+                }
+            }
+        }
+        return null;
+    }
+
+    /** Gets the organization group list
+     * @return Arraylist of groups
+     */
+    public ArrayList<Group> getGroupList() {
+        return groupList;
     }
 
     /** Gets the organization name

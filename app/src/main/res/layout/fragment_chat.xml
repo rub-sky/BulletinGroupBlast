@@ -1,7 +1,7 @@
 <!--
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,6 +11,6 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="@string/title_chat" />
 
 </FrameLayout>

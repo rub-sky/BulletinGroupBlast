@@ -1,10 +1,8 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
- *
- * Created by Ruben Piatnitsky on 7/29/15.
  */
 
 package com.bulletingroupblast.bulletingroupblast;
@@ -42,8 +40,7 @@ import java.util.ArrayList;
  */
 public class NavigationGroupDrawerFragment extends Fragment {
 
-    /**
-     * Remember the position of the selected item.
+    /** the position of the selected item.
      */
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
 
@@ -308,32 +305,6 @@ public class NavigationGroupDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    /** Group menu item click event function
-     * @param adView
-     * @param v
-     * @param position
-     * @param id
-     */
-    public void onGroupMenuItemClick(AdapterView<?> adView, View v, int position, long id) {
-        switch (position) {
-            case 0:
-                // Open Fragment
-                break;
-            case 1:
-                // Open Fragment
-                break;
-            case 2:
-                // Open Fragment
-                break;
-            case 3:
-                // Open Fragment
-                break;
-            default:
-                // Do something
-                break;
-        }
-    }
-
     /** Sets the navigation item list
      *
      */
@@ -347,18 +318,18 @@ public class NavigationGroupDrawerFragment extends Fragment {
         mNavItemsList = new ArrayList<NavListItemWithCounter>();
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_dashboard_white, mTitleList[0]));
+                R.drawable.ic_account_balance, mTitleList[0]));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_view_list_white, mTitleList[1],"4"));
+                R.drawable.ic_view_list_dark, mTitleList[1],"3"));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_event_white, mTitleList[2], "6"));
+                R.drawable.ic_event_white, mTitleList[2], "4"));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_question_answer_white, mTitleList[3]));
+                R.drawable.ic_question_answer_white, mTitleList[3],"+10"));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_account_circle_white, mTitleList[4], "1"));
+                R.drawable.ic_account_circle_white, mTitleList[4], "15"));
     }
 }

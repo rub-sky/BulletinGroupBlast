@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * @Author Ruben Piatnitsky
@@ -209,11 +209,6 @@ public class User extends DatabaseEntity {
         return success;
     }
 
-    protected String salt(String MD5Password, Date dateCreated) {
-        String Salt = dateCreated.toString() + SecurityUtil.RandomString(16);
-        return (MD5Password + salt) + salt;
-    }
-
 
     /**@apiNote Adds an organization to the user's organization list
      * @param newOrganization - Organization Class Object
@@ -229,6 +224,49 @@ public class User extends DatabaseEntity {
         }
 
         return success;
+    }
+
+    /** Gets the organization by the index number
+     * @param index of the organization in the list
+     * @return Organization object
+     */
+    public Organization getOrganizationByIndex(int index) {
+
+        // Check if any organizations exist
+        if (organizationList.size() > 0) {
+            // If the index is in range then return it
+            if (index >= 0 && index < organizationList.size()) {
+                return organizationList.get(index);
+            }
+        }
+        return null;
+    }
+
+    /** Get the organization by id
+     * @param id of the organization
+     * @return organization if exists or null otherwise
+     */
+    public Organization getOrganizationById(int id) {
+
+        // Check if any organizations exist
+        if (organizationList.size() > 0) {
+            //Loop through all organizations
+            for (int i = 0; i < organizationList.size(); i++) {
+                Organization org = organizationList.get(i);
+                // Check if the id matches
+                if (org.getId() == id) {
+                    return org;     // match
+                }
+            }
+        }
+        return null;
+    }
+
+    /** Gets the list of organizations that the user is part of
+     * @return ArrayList of organizations
+     */
+    public ArrayList<Organization> getOrganizationList() {
+        return organizationList;
     }
 
     /**@apiNote Adds a group to the user's group list

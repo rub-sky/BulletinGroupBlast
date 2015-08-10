@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 8/2/15.
@@ -16,6 +16,11 @@ public class NavListItemWithCounter {
     private String count = "0";
     private boolean iconVisible = true; // Toggles the visibility of the icon
     private boolean counterVisible = false; // Toggles the visibility of the counter
+
+    // Values for setting the text color to light or dark
+    protected int darkTextColor = 0;
+    protected int lightTextColor = 0;
+    protected boolean isTextLight = true;
 
     /** Default Constructor
      *
@@ -143,5 +148,50 @@ public class NavListItemWithCounter {
      */
     public void setCounterVisible(boolean counterVisible) {
         this.counterVisible = counterVisible;
+    }
+
+    /** Get current Dark Text Color
+     *
+     * @return string of dark text color
+     */
+    public int getDarkTextColor() {
+        return darkTextColor;
+    }
+
+    /** Set the dark text color
+     *
+     * @param darkTextColor Must be a hexadecimal number (ie. #C3C5C9)
+     */
+    public void setDarkTextColor(int darkTextColor) {
+        this.darkTextColor = darkTextColor;
+    }
+
+    /** Gets the light text color
+     * @return string of light text color
+     */
+    public int getLightTextColor() {
+        return lightTextColor;
+    }
+
+    /** Sets the light text color
+     * @param lightTextColor Must be a hexadecimal number (ie. #C3C5C9)
+     */
+    public void setLightTextColor(int lightTextColor) {
+        this.lightTextColor = lightTextColor;
+    }
+
+    /** Gets the value of if the text color is light
+     * @return boolean true if light color, false otherwise
+     */
+    public boolean isTextLight() {
+        return isTextLight;
+    }
+
+    /** Sets the text to be dark colored
+     *
+     * @param isTextLight boolean true if light color, false for dark
+     */
+    public void setIsTextLight(boolean isTextLight) {
+        this.isTextLight = isTextLight;
     }
 }

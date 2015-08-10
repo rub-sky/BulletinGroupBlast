@@ -1,10 +1,8 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
- *
- * Created by Ruben Piatnitsky on 8/2/15.
  */
 
 package com.bulletingroupblast.bulletingroupblast.adapter;
@@ -118,6 +116,7 @@ public class NavListWithCounterAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.nav_list_item_with_count, null);
         }
 
+        // Link to actual objects in layout
         ImageView icon = (ImageView) view.findViewById(R.id.nav_item_icon);
         TextView txtTitle = (TextView) view.findViewById(R.id.nav_item_title);
         TextView txtCount = (TextView) view.findViewById(R.id.nav_item_counter);
@@ -125,6 +124,7 @@ public class NavListWithCounterAdapter extends BaseAdapter {
         // Get the current list item
         NavListItemWithCounter listItem = navListItems.get(position);
 
+        // Set the values for icon and title
         icon.setImageResource(listItem.getIcon());    // Set the icon
         txtTitle.setText(listItem.getTitle());        // Set the title
 
@@ -135,6 +135,19 @@ public class NavListWithCounterAdapter extends BaseAdapter {
             txtCount.setVisibility(View.GONE);          // Hide the counter otherwise
         }
 
+        // Check if the item is light or dark and set the color
+        if (listItem.isTextLight()) {
+
+            // Check if values are empty
+            if (listItem.getDarkTextColor() != 0) {
+                txtTitle.setTextColor(listItem.getDarkTextColor());
+            }
+            if (listItem.getLightTextColor() != 0) {
+                txtCount.setTextColor(listItem.getLightTextColor());
+            }
+        }
+
         return view;
     }
+
 }

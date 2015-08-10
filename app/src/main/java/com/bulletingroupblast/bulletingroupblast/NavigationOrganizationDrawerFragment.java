@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 7/29/15.
@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -76,9 +77,12 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
     private CharSequence mTitle;
     private String[] mTitleList;
     private Organization mSelectedOrg;
+    private String mOrgName = null;
 
-        public NavigationOrganizationDrawerFragment() {
-    }
+    public static final String ORG_ID = "com.BulletinGroupBlast.BulletinGroupBlast.orgId";
+    private static final String ORG_NAME = "orgName";
+
+    public NavigationOrganizationDrawerFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,8 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
 
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
+
+
 
         // Create the title list
         mTitleList = new String[]{
@@ -134,16 +140,13 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
             }
         });
 
-        /*navDrawerItemsList =
+        // Load the Organization name
+//        mOrgName = getArguments().getString(ORG_NAME);
+//        TextView lblOrgName = (TextView) getActivity().findViewById(R.id.lblNavOrgName);
+//        lblOrgName.setText(mOrgName);
 
-        // Set the list view adapter
-        ArrayAdapter menuListAdapter = new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                mTitleList);*/
 
-        SetNavigationListItems();
+        SetNavigationListItems();   // Sets the menu items in the list view
 
         NavListWithCounterAdapter menuListAdapter = new NavListWithCounterAdapter(
                 getActionBar().getThemedContext(),mNavItemsList);
@@ -334,7 +337,7 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
     }
 
 
-    /** Sets the navigation item list
+    /** Sets the navigation item list Strings
      *
       */
     private void SetNavigationListItems() {
@@ -347,13 +350,13 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
         mNavItemsList = new ArrayList<NavListItemWithCounter>();
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_dashboard_white, mTitleList[0]));
+                R.drawable.ic_account_balance, mTitleList[0]));
 
         mNavItemsList.add(new NavListItemWithCounter(
                 R.drawable.ic_group_work_white, mTitleList[1],"5"));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_view_list_white, mTitleList[2],"2"));
+                R.drawable.ic_view_list_dark, mTitleList[2],"18"));
 
         mNavItemsList.add(new NavListItemWithCounter(
                 R.drawable.ic_event_white, mTitleList[3], "10"));
@@ -362,6 +365,6 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
                 R.drawable.ic_perm_contact_calendar_white, mTitleList[4]));
 
         mNavItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_account_circle_white, mTitleList[5], "1"));
+                R.drawable.ic_account_circle_white, mTitleList[5], "15"));
     }
 }

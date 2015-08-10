@@ -2,18 +2,23 @@
 <!--
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_news_list_item"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bulletingroupblast.bulletingroupblast.NewsItemFragment">
 
-    <ListView android:id="@android:id/list" android:layout_width="match_parent"
+    <ListView android:id="@android:id/list"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView android:id="@android:id/empty" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center" />
+    <TextView android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" />
 
 </FrameLayout>

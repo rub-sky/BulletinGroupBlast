@@ -1,7 +1,7 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
  *
  * Created by Ruben Piatnitsky on 7/29/15.
@@ -13,8 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.app.Fragment;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
 import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
@@ -41,19 +41,18 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class OrganizationOverviewFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ORG_ID = "orgId";
+    private static final String ORG_NAME = "orgName";
     private ArrayList<NavListItemWithCounter> mOverviewItemsList;
     private String[] mTitleList;
 //    protected ArrayAdapter mAdapter;
     protected NavListWithCounterAdapter mAdapter;
     protected ListView mListView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Parameters
+    private int mOrgId = 0;
+    private String mOrgName;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,16 +60,15 @@ public class OrganizationOverviewFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param orgId Parameter 1.
+     * @param orgName Parameter 2.
      * @return A new instance of fragment OrganizationOverviewFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static OrganizationOverviewFragment newInstance(String param1, String param2) {
+    public static OrganizationOverviewFragment newInstance(int orgId, String orgName) {
         OrganizationOverviewFragment fragment = new OrganizationOverviewFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ORG_ID, orgId);
+        args.putString(ORG_NAME, orgName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,8 +81,8 @@ public class OrganizationOverviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mOrgId = getArguments().getInt(ORG_ID);
+            mOrgName = getArguments().getString(ORG_NAME);
         }
 
         // Set the title list
@@ -132,8 +130,9 @@ public class OrganizationOverviewFragment extends Fragment {
 
             // Change the Organization Name label
             TextView lblOrgName = (TextView) view.findViewById(R.id.lblOrganizationName);
-            lblOrgName.setText(mParam1);
+            lblOrgName.setText(mOrgName);
         }
+
 
         return view;
     }
@@ -212,19 +211,19 @@ public class OrganizationOverviewFragment extends Fragment {
         mOverviewItemsList = new ArrayList<NavListItemWithCounter>();
 
         mOverviewItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_group_work_white, mTitleList[0],"5"));
+                R.drawable.ic_group_work_dark, mTitleList[0],"5"));
 
         mOverviewItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_view_list_white, mTitleList[1],"2"));
+                R.drawable.ic_view_list_dark, mTitleList[1],"18"));
 
         mOverviewItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_event_white, mTitleList[2], "10"));
+                R.drawable.ic_event_dark, mTitleList[2], "10"));
 
         mOverviewItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_perm_contact_calendar_white, mTitleList[3]));
+                R.drawable.ic_perm_contact_calendar_dark, mTitleList[3]));
 
         mOverviewItemsList.add(new NavListItemWithCounter(
-                R.drawable.ic_account_circle_white, mTitleList[4], "1"));
+                R.drawable.ic_account_circle_black, mTitleList[4], "15"));
     }
 
 }

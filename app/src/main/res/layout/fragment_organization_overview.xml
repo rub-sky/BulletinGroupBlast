@@ -1,19 +1,19 @@
 <!--
  * Copyright © 2015 Ruben Piatnitsky
  * This program is released under the "GNU license".
- * Please see the file COPYING in this distribution for
+ * Please see the file LICENSE in this distribution for
  * license terms.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bulletingroupblast.bulletingroupblast.OrganizationOverviewFragment"
-    android:background="#ff199a9f">
+    android:background="#8bc34a">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="@string/title_activity_organization"
-        android:gravity="center"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_gravity="center_vertical"
         android:id="@+id/lblOrganizationName"
         android:textSize="@dimen/abc_text_size_medium_material"
@@ -27,6 +27,6 @@
         android:id="@+id/lstOverviewItems"
         android:headerDividersEnabled="true"
         android:layout_gravity="bottom"
-        android:background="#ffffffff" />
+        android:background="#cccccc" />
 
 </FrameLayout>
