@@ -11,3 +11,17 @@ The BulletinGroupBlast application provides an interface for organizations to ma
 
 The purpose is to provide an effective tool for small organizations, such as home school groups, churches, hobby groups and other nonprofit groups, to be able to centralize their announcements.
 
+Status of Project:
+
+Working Features:
+  - A datastructure backend that allows storage and interfacing of the different entities
+  - Currently have an interface that loads a test user in and displays data related to the user
+
+In-Progress:
+  - Database integration of entity objects so that the data may be stored
+  - User interface
+  - Database
+
+
+How to Build the BGB Project:
+   - APK
