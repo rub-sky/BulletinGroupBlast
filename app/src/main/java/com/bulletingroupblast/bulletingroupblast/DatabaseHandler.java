@@ -13,6 +13,9 @@ import android.database.*;
 import android.database.sqlite.*;
 import android.util.Log;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +29,40 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "BulletinGroupBlast";
     private static final String[] TABLE_NAMES = {"tblUser","tblGroup","tblOrganization","tblChat","tblAnnouncement","tblNotification","tblNotification"};
+    private static final String USER_TABLE_NAME = "tblUser";
+
+    protected final String[] TABLE_COL_NAMES = {
+            "id",
+            "email",
+            "password",
+            "salt",
+            "firstName",
+            "lastName",
+            "isActive",
+            "autoLogin",
+            "dateCreated",
+            "avatarFileName"
+    };
+    protected final String[] TABLE_COL_TYPES = {
+            "INT PRIMARY KEY",
+            "VARCHAR(100)",
+            "VARCHAR(300)",
+            "VARCHAR(300)",
+            "VARCHAR(50)",
+            "VARCHAR(50)",
+            "BOOLEAN DEFAULT 1",
+            "BOOLEAN DEFAULT 1",
+            "DATETIME",
+            "TEXT"
+    };
+
 
     public DatabaseHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     /** Creating the Database Tables
-     * @param db
+     * @param db database
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -43,9 +73,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
     /** Updating the Database
-     * @param db
-     * @param oldVersion
-     * @param newVersion
+     * @param db database
+     * @param oldVersion older version value
+     * @param newVersion new version value
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -59,12 +89,12 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     /*TODO: Write the database class that will handle the database requests*/
 
-    /** This function inserts into the database
+    /** This function inserts values into the database
      * @param values are a list of table column names and their new values
      * @param table is the table name
      * @return an int
      */
-    public boolean Insert(ContentValues values, String table) {
+    public boolean Insert(String table, ContentValues values) {
         boolean result;
 
         try {
@@ -85,9 +115,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      * @return an int
      */
     public int Delete(String qry) {
-        int result = 0;
 
-        return result;
+        return 0;
     }
 
     /** This Function updates the given record
@@ -95,9 +124,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      * @return an int value
      */
     public int Update(String qry) {
-        int result = 0;
 
-        return result;
+        return 0;
     }
 
     /** Gets one item from the database and returns it populated
@@ -200,6 +228,112 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
         return results;
     }*/
+
+    /** ======================= User SQL ================== */
+
+//    protected final String[] TABLE_COL_NAMES = {
+//            "id",
+//            "email",
+//            "password",
+//            "salt",
+//            "firstName",
+//            "lastName",
+//            "isActive",
+//            "autoLogin",
+//            "dateCreated",
+//            "avatarFileName"
+//    };
+//    protected final String[] TABLE_COL_TYPES = {
+//            "INT PRIMARY KEY",
+//            "VARCHAR(100)",
+//            "VARCHAR(300)",
+//            "VARCHAR(300)",
+//            "VARCHAR(50)",
+//            "VARCHAR(50)",
+//            "BOOLEAN DEFAULT 1",
+//            "BOOLEAN DEFAULT 1",
+//            "DATETIME",
+//            "TEXT"
+//    };
+
+    /** Create table string for User
+     * @return string
+     */
+    public String createUserTable() {
+        String createTblUser = "CREATE TABLE COMPANY(\n" +
+                "id             INT PRIMARY KEY     NOT NULL,\n" +
+                "email          VARCHAR(100)    NOT NULL,\n" +
+                "password       VARCHAR(300)    NOT NULL,\n" +
+                "salt           CHAR(50)        NOT NULL,\n" +
+                "firstName      VARCHAR(100)    NOT NULL,\n" +
+                "lastName       VARCHAR(100)    NOT NULL,\n" +
+                "isActive       BOOLEAN DEFAULT 1,\n" +
+                "autoLogin      BOOLEAN DEFAULT 1,\n" +
+                "dateCreated    DATETIME        NOT NULL,\n" +
+                "avatarFileName TEXT\n" +
+                ");";
+        return createTblUser;
+    }
+
+    /** Remove a user with a given id
+     * @param id of the user
+     * @return string
+     */
+    public int removeUser(int id) {
+        String delUserStr = "DELETE FROM tblUser WHERE id = " + id + ";";
+        db = this.getWritableDatabase();
+
+        int cnt = db.delete(USER_TABLE_NAME, "id = " + id, null);
+        db.close();
+
+        return cnt;
+    }
+
+    /** Gets a user from the database and populates it
+     *
+     * @param id of user to get
+     * @return User object
+     */
+    public User selectUser(int id) {
+        User selUser = new User();
+        String selUserQry = "SELECT * from tblUSer WHERE id = " + id + ";";
+        return selUser;
+    }
+
+    /** Get a list of Users from the database
+     *
+     * @param filter is a string with SQL WHERE conditions
+     * @return Arraylist of Users
+     */
+    public ArrayList<User> selectUserArray(String filter) {
+        ArrayList<User> userList = new ArrayList<>();
+        String selUserQry = "SELECT * from tblUSer WHERE " + filter + ";";
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selUserQry, null);
+        c.moveToFirst();
+
+        // Move through the results
+        while (!c.equals(null)) {
+            User tempUser = new User(
+                    c.getInt(c.getColumnIndex("id")),
+                    c.getString(c.getColumnIndex("email")),
+                    c.getString(c.getColumnIndex("password")),
+                    c.getString(c.getColumnIndex("firstName")),
+                    c.getString(c.getColumnIndex("lastName"))
+            );
+
+            tempUser.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+            tempUser.setAutoLogin(Boolean.parseBoolean(c.getString(c.getColumnIndex("autoLogin"))));
+            tempUser.setAvatarFileName(c.getString(c.getColumnIndex("avatarFileName")));
+            userList.add(tempUser);
+        }
+
+        db.close();
+        return userList;
+    }
+
 
 }
 

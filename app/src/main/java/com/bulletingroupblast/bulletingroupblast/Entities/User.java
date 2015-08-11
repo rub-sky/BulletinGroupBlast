@@ -49,7 +49,7 @@ public class User extends DatabaseEntity {
             "avatarFileName"
     };
     protected final String[] TABLE_COL_TYPES = {
-            "INTEGER PRIMARY KEY",
+            "INT PRIMARY KEY",
             "VARCHAR(100)",
             "VARCHAR(300)",
             "VARCHAR(300)",
@@ -72,6 +72,9 @@ public class User extends DatabaseEntity {
     // Used to create the table in the database
     protected Map<String, String> tableMap;     // The mapping of columns to their types
 
+    /** User Constructor
+     */
+    public User() {super();}
 
     /**@apiNote Default Constructor
      * @param user_email - String
@@ -360,21 +363,26 @@ public class User extends DatabaseEntity {
         this.avatar = avatar;
     }
 
-    /** Sends the user a confirmation email
-     * @return boolean - true if message sent and false otherwise
+    /** Get the avatar file name
+     * @return string file name of avatar
      */
-    public boolean SendConfirmation() {
-        boolean result = false;
+    public String getAvatarFileName() {
+        return avatarFileName;
+    }
 
-        try {
-            /*TODO: Generate an Email to be sent*/
+    /** Sets the avatar file name
+     * @param avatarFileName file name with directory
+     */
+    public void setAvatarFileName(String avatarFileName) {
+        this.avatarFileName = avatarFileName;
+    }
 
-        } catch (Exception e) {
-            /*TODO: Log the error*/
-            /*TODO: Redirect*/
-        }
-
-        return result;
+    /** Set isActive
+     *
+     * @param isActive true if user is ative, false otherwise
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     /** Generate a value list to save into the database
