@@ -8,6 +8,7 @@ The BulletinGroupBlast Android app provides an interface that allows organizatio
 * [License](#license-information)
 * [Contact Information](#contact-information)
 * [Building the Project](#building-the-project)
+* [Issues](#issues)
 
 
 ###How it works
@@ -78,3 +79,6 @@ For the app to work correctly, a MySQL database must be hosted on a server. The 
     
 #####Running the App Reference
 See the official documentation for running your app in detail [here](http://developer.android.com/intl/ko/training/basics/firstapp/running-app.html).
+
+###Issues
+Please use the [issue tracker](issues) to submit any bugs or problems with the project.
