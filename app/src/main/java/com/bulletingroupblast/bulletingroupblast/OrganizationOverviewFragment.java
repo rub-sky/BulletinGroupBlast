@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -9,8 +9,6 @@
 
 package com.bulletingroupblast.bulletingroupblast;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,16 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
-import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
-import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
 
 import java.util.ArrayList;
 
@@ -47,7 +40,7 @@ public class OrganizationOverviewFragment extends Fragment {
     private ArrayList<NavListItemWithCounter> mOverviewItemsList;
     private String[] mTitleList;
 //    protected ArrayAdapter mAdapter;
-    protected NavListWithCounterAdapter mAdapter;
+    protected NavListAdapter mAdapter;
     protected ListView mListView;
 
     // Parameters
@@ -113,7 +106,7 @@ public class OrganizationOverviewFragment extends Fragment {
 
 //        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 //                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-        mAdapter = new NavListWithCounterAdapter(getActivity(), mOverviewItemsList);
+        mAdapter = new NavListAdapter(getActivity(), mOverviewItemsList);
 
         if (view != null) { // Check if the view is valid
             // Set the adapter

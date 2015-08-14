@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  */
@@ -28,7 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
 
 import java.util.ArrayList;
@@ -126,7 +126,7 @@ public class NavigationGroupDrawerFragment extends Fragment {
         SetNavigationListItems();
 
         // Set the adapter
-        mDrawerListView.setAdapter(new NavListWithCounterAdapter(
+        mDrawerListView.setAdapter(new NavListAdapter(
                 getActionBar().getThemedContext(),mNavItemsList));
 
         // Set the item position

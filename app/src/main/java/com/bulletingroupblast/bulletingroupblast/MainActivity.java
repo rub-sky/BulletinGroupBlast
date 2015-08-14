@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -85,6 +85,9 @@ public class MainActivity extends Activity {
                     goToCreateNewUserAccount(); // Data Error
                     break;
                 case 1:
+                    GlobalState gs = (GlobalState) getApplicationContext();
+                    gs.createTestData();
+
                     goToUserLanding();          // Log user in automatically
                     break;
                 default:

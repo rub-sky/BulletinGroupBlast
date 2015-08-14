@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -10,7 +10,7 @@
 package com.bulletingroupblast.bulletingroupblast;
 
 import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
-import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.*;
 
 import android.support.v7.app.ActionBarActivity;
@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -148,7 +147,7 @@ public class NavigationOrganizationDrawerFragment extends Fragment {
 
         SetNavigationListItems();   // Sets the menu items in the list view
 
-        NavListWithCounterAdapter menuListAdapter = new NavListWithCounterAdapter(
+        NavListAdapter menuListAdapter = new NavListAdapter(
                 getActionBar().getThemedContext(),mNavItemsList);
         mDrawerListView.setAdapter(menuListAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);

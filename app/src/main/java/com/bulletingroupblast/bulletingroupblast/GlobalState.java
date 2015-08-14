@@ -1,30 +1,11 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
- * Created by Ruben Piatnitsky on 7/20/15.
  */
 
-/*Add to given class example:
-*
-* public class ExampleActivity extends Activity {
-
-        GlobalState gs;
-
-	public void onCreate(Bundle savedInstanceState) {
-              gs = (GlobalState) getApplication();
-        }
-
-        public void examples(){
-            File temp = gs.getFilePath();
-            if(gs.refresh()){
-                gs.setRefresh(false);
-             }
-        }
-}
-* */
 
 package com.bulletingroupblast.bulletingroupblast;
 

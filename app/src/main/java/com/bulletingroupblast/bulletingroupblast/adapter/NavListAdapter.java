@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  */
@@ -23,19 +23,19 @@ import android.widget.TextView;
 /** This class is for a custom navigation pane list items to have navListItem views
  *
  */
-public class NavListWithCounterAdapter extends BaseAdapter {
+public class NavListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<NavListItemWithCounter> navListItems;
 
-    public NavListWithCounterAdapter() {}
+    public NavListAdapter() {}
 
     /** Constructor with context and ArrayList of navListItems
      *
      * @param context context of the current activity
      * @param navItems Are the {@link:ArrayList} of {@link:navListItem}
      */
-    public NavListWithCounterAdapter(Context context, ArrayList<NavListItemWithCounter> navItems) {
+    public NavListAdapter(Context context, ArrayList<NavListItemWithCounter> navItems) {
         this.context = context;
         this.navListItems = navItems;
     }

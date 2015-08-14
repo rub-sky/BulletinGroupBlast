@@ -1,10 +1,9 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
- * @Author Ruben Piatnitsky
  */
 
 package com.bulletingroupblast.bulletingroupblast;

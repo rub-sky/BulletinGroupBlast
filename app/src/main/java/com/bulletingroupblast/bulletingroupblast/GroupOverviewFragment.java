@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -23,7 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bulletingroupblast.bulletingroupblast.adapter.NavListWithCounterAdapter;
+import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
 import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class GroupOverviewFragment extends Fragment {
     private static final String GRP_NAME = "grpName";
     private ArrayList<NavListItemWithCounter> mOverviewItemsList;
     private String[] mTitleList;
-    protected NavListWithCounterAdapter mAdapter;
+    protected NavListAdapter mAdapter;
     protected ListView mListView;
 
     // Parameters
@@ -109,7 +109,7 @@ public class GroupOverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_overview, container, false);
 
-        mAdapter = new NavListWithCounterAdapter(getActivity(), mOverviewItemsList);
+        mAdapter = new NavListAdapter(getActivity(), mOverviewItemsList);
 
         if (view != null) {             // Check if the view is valid
 

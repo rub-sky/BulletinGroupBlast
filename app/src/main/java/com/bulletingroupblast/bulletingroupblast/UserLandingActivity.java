@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -41,8 +41,7 @@ public class UserLandingActivity extends ActionBarActivity {
         setContentView(R.layout.activity_user_landing);
 
         // Generate test data
-        gs = new GlobalState();
-        gs.createTestData();
+        gs = (GlobalState) getApplicationContext();
 
         // Test data
         User testUser = gs.getCurrentUser();

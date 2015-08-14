@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
+import com.bulletingroupblast.bulletingroupblast.Entities.User;
 
 
 public class OrganizationActivity extends ActionBarActivity
@@ -54,8 +55,8 @@ public class OrganizationActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization);
 
-        GlobalState gs = new GlobalState();
-        gs.createTestData();
+        GlobalState gs = (GlobalState) getApplicationContext();     // Global Variables
+        User currentUser = gs.getCurrentUser();
 
         mNavigationOrganizationDrawerFragment = (NavigationOrganizationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.organization_navigation_drawer);

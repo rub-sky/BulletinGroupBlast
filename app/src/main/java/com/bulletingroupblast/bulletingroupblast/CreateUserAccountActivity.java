@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -122,9 +122,7 @@ public class CreateUserAccountActivity extends ActionBarActivity {
                 // Create a new User object
                 newUser = new User(FName, LName, Email, Password);
                 String qryUpdateUser = newUser.UpdateString();
-
-                newUser.SendConfirmation();
-
+                /*TODO: Notify user by email that the user was updated*/
                 result = true;      // success
             }
 
