@@ -1,6 +1,6 @@
 /**
  * Copyright © 2015 Ruben Piatnitsky
- * This program is released under the "GNU license".
+ * This program is released under the "MIT license".
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
@@ -22,7 +22,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
+import com.bulletingroupblast.bulletingroupblast.adapter.NewsListAdapter;
+import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NewsListItem;
 import com.bulletingroupblast.bulletingroupblast.dummy.DummyContent;
+
+import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -55,7 +59,7 @@ public class NewsItemFragment extends Fragment implements AbsListView.OnItemClic
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private NewsListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static NewsItemFragment newInstance(String param1, String param2) {
@@ -84,8 +88,24 @@ public class NewsItemFragment extends Fragment implements AbsListView.OnItemClic
         }
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        ArrayList<NewsListItem> newsList = new ArrayList<>();
+
+        // Sample News Items
+        newsList.add(new NewsListItem(getString(R.string.news_item_sample_title),
+                getString(R.string.news_item_sample_desc)));
+        newsList.add(new NewsListItem(R.drawable.image1,
+                getString(R.string.news_item_sample_title),
+                getString(R.string.news_item_sample_desc)));
+        newsList.add(new NewsListItem(R.drawable.image1,
+                getString(R.string.news_item_sample_title),
+                getString(R.string.news_item_sample_desc)));
+        newsList.add(new NewsListItem(getString(R.string.news_item_sample_title),
+                getString(R.string.news_item_sample_desc)));
+        newsList.add(new NewsListItem(getString(R.string.news_item_sample_title),
+                getString(R.string.news_item_sample_desc)));
+
+
+        mAdapter = new NewsListAdapter(getActivity(), newsList);
     }
 
     @Override
