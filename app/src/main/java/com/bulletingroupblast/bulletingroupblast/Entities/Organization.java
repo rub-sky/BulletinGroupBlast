@@ -135,6 +135,38 @@ public class Organization extends DatabaseEntity {
 
         long time = System.currentTimeMillis(); // Get the current time
         this.createdDate = new Timestamp(time);
+
+        // Add the admin
+        if (orgAdmin != null) {
+            this.adminList.add(orgAdmin);
+        }
+    }
+
+    /** This is the secondary constructor for the organization class
+     * @param orgId Organization Id
+     * @param orgName Organization name
+     * @param orgDesc Description of the organization
+     */
+    public Organization(int orgId, String orgName, String orgDesc) {
+        super();
+
+        if (orgName != null || !orgName.isEmpty()) {
+            this.name = orgName;
+        }
+//        else {
+        // Throw exception
+//        }
+
+        this.description = orgDesc;
+        this.id = orgId;
+        this.address1 = new String();
+        this.address2 = new String();
+        this.city = new String();
+        this.state = new String();
+        this.zipCode = new String();
+
+        long time = System.currentTimeMillis(); // Get the current time
+        this.createdDate = new Timestamp(time);
     }
 
     /** This function allows you to add a new group to the organization
@@ -428,5 +460,76 @@ public class Organization extends DatabaseEntity {
      */
     public String[] getTableColumnTypes() {
         return TABLE_COL_TYPES;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    /** Gets the organization active state
+      * @return boolean
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+
+    /** Sets the Active state of oranization
+     * @param isActive boolean
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }

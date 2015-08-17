@@ -13,6 +13,7 @@ import android.database.*;
 import android.database.sqlite.*;
 import android.util.Log;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 import com.bulletingroupblast.bulletingroupblast.Entities.User;
 
 import java.util.Date;
@@ -28,37 +29,63 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "BulletinGroupBlast";
-    private static final String[] TABLE_NAMES = {"tblUser","tblGroup","tblOrganization","tblChat","tblAnnouncement","tblNotification","tblNotification"};
+
+    // Entity tables
+    private static final String ANNOUNCEMENT_TABLE_NAME = "tblAnnouncement";
+    private static final String CALENDAR_EVENT_TABLE_NAME = "tblCalendarEvent";
+    private static final String CATEGORY_TABLE_NAME = "tblCategory";
+    private static final String CHAT_TABLE_NAME = "tblChat";
+    private static final String CHAT_MESSAGE_TABLE_NAME = "tblChatMessage";
+    private static final String GROUP_TABLE_NAME = "tblGroup";
+    private static final String ORGANIZATION_TABLE_NAME = "tblOrganization";
     private static final String USER_TABLE_NAME = "tblUser";
 
-    protected final String[] TABLE_COL_NAMES = {
-            "id",
-            "email",
-            "password",
-            "salt",
-            "firstName",
-            "lastName",
-            "isActive",
-            "autoLogin",
-            "dateCreated",
-            "avatarFileName"
-    };
-    protected final String[] TABLE_COL_TYPES = {
-            "INT PRIMARY KEY",
-            "VARCHAR(100)",
-            "VARCHAR(300)",
-            "VARCHAR(300)",
-            "VARCHAR(50)",
-            "VARCHAR(50)",
-            "BOOLEAN DEFAULT 1",
-            "BOOLEAN DEFAULT 1",
-            "DATETIME",
-            "TEXT"
+    // Tables that define the relationship between entities
+    private static final String USER_ORG_TABLE_NAME = "tblUserOrgs";    // User's organizations list
+    private static final String USER_ORG_GROUP_TABLE_NAME = "tblUserOrgsGroup"; // Users Group list for organizations
+    private static final String GROUP_CAT_TABLE_NAME = "tblGroupCategory";
+    private static final String GROUP_CHAT_TABLE_NAME = "tblGroupChat";
+
+    private static final String[] ENTITY_TABLE_NAMES = {
+            ANNOUNCEMENT_TABLE_NAME,
+            CALENDAR_EVENT_TABLE_NAME,
+            CATEGORY_TABLE_NAME,
+            CHAT_TABLE_NAME,
+            CHAT_MESSAGE_TABLE_NAME,
+            GROUP_TABLE_NAME,
+            ORGANIZATION_TABLE_NAME,
+            USER_TABLE_NAME
     };
 
+    private static final String[] REL_TABLE_NAMES = {
+            USER_ORG_TABLE_NAME,
+            USER_ORG_GROUP_TABLE_NAME,
+            GROUP_CAT_TABLE_NAME,
+            GROUP_CHAT_TABLE_NAME
+    };
 
+    private static String[] CREATE_TABLE_STRS;
+
+
+    /** DEfault Constructor
+     *
+     * @param context context of current activity
+     */
     public DatabaseHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+
+        // Create Strings
+        CREATE_TABLE_STRS = new String[] {
+//                createAnnouncementTable(),
+//                createCalendarEventTable(),
+//                createCategoryTable(),
+//                createChatTable,
+//                createChatMessageTable(),
+//                createGroupTable(),
+                createOrganizationTable(),
+                createUserTable()
+        };
+
     }
 
     /** Creating the Database Tables
@@ -66,10 +93,17 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        for (int i = 0; i <TABLE_NAMES.length; i++) {
+        for (int i = 0; i < ENTITY_TABLE_NAMES.length; i++) {
             String CREATE_TABLE = "";
             db.execSQL(CREATE_TABLE);
         }
+
+        createUserTable();
+        /*TODO: createUserOrgTable();*/
+        createOrganizationTable();
+        /*TODO: createGroupTable();*/
+        /*TODO: createOrgGroupTable();*/
+        /*TODO: createChatTable();*/
     }
 
     /** Updating the Database
@@ -83,7 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + "table name");
 
         // Create tables again
-        onCreate(db);
+            onCreate(db);
     }
 
 
@@ -260,7 +294,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      * @return string
      */
     public String createUserTable() {
-        String createTblUser = "CREATE TABLE COMPANY(\n" +
+        return "CREATE TABLE " + USER_TABLE_NAME + "(\n" +
                 "id             INT PRIMARY KEY     NOT NULL,\n" +
                 "email          VARCHAR(100)    NOT NULL,\n" +
                 "password       VARCHAR(300)    NOT NULL,\n" +
@@ -272,15 +306,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 "dateCreated    DATETIME        NOT NULL,\n" +
                 "avatarFileName TEXT\n" +
                 ");";
-        return createTblUser;
     }
 
     /** Remove a user with a given id
      * @param id of the user
      * @return string
      */
-    public int removeUser(int id) {
-        String delUserStr = "DELETE FROM tblUser WHERE id = " + id + ";";
+    public int deleteUser(int id) {
         db = this.getWritableDatabase();
 
         int cnt = db.delete(USER_TABLE_NAME, "id = " + id, null);
@@ -297,7 +329,26 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public User selectUser(int id) {
         User selUser = new User();
         String selUserQry = "SELECT * from tblUSer WHERE id = " + id + ";";
-        return selUser;
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selUserQry, null);
+        c.moveToFirst();
+
+        User tempUser = new User(
+                c.getInt(c.getColumnIndex("id")),
+                c.getString(c.getColumnIndex("email")),
+                c.getString(c.getColumnIndex("password")),
+                c.getString(c.getColumnIndex("firstName")),
+                c.getString(c.getColumnIndex("lastName"))
+        );
+
+        tempUser.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+        tempUser.setAutoLogin(Boolean.parseBoolean(c.getString(c.getColumnIndex("autoLogin"))));
+        tempUser.setAvatarFileName(c.getString(c.getColumnIndex("avatarFileName")));
+
+        db.close();
+        return tempUser;
     }
 
     /** Get a list of Users from the database
@@ -335,5 +386,139 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
 
+    /*protected final String[] TABLE_COL_NAMES = {
+            "id",
+            "name",
+            "description",
+            "createDate",
+            "address1",
+            "address2",
+            "city",
+            "state",
+            "zipCode",
+            "websiteLink",
+            "logoFileName",
+            "isActive"
+    };
+    protected final String[] TABLE_COL_TYPES = {
+            "INTEGER PRIMARY KEY",
+            "VARCHAR(150)",
+            "VARCHAR(300)",
+            "DATETIME",
+            "VARCHAR(100)",
+            "VARCHAR(100)",
+            "VARCHAR(50)",
+            "VARCHAR(2)",
+            "VARCHAR(9)",
+            "VARCHAR(150)",
+            "VARCHAR(75)",
+            "BOOLEAN DEFAULT 1"
+    };*/
+    /** Create table string for User
+     * @return string
+     */
+    public String createOrganizationTable() {
+        return "CREATE TABLE " + ORGANIZATION_TABLE_NAME + "(\n" +
+                "id             INT PRIMARY KEY     NOT NULL,\n" +
+                "name           VARCHAR(150)    NOT NULL,\n" +
+                "description    VARCHAR(300)    NOT NULL,\n" +
+                "createDate     DATETIME      NOT NULL,\n" +
+                "address1       VARCHAR(100),\n" +
+                "address2       VARCHAR(100),\n" +
+                "city           VARCHAR(50),\n" +
+                "state          VARCHAR(2),\n" +
+                "zipCode        VARCHAR(9)          NOT NULL,\n" +
+                "websiteLink    VARCHAR(150)\n" +
+                "logoFileName   VARCHAR(75)         NOT NULL,\n" +
+                "isActive       BOOLEAN DEFAULT 1\n" +
+                ");";
+    }
+
+    /** Remove a user with a given id
+     * @param id of the user
+     * @return string
+     */
+    public int deleteOrganization(int id) {
+        db = this.getWritableDatabase();
+        int cnt = db.delete(ORGANIZATION_TABLE_NAME, "id = " + id, null);
+        db.close();
+
+        return cnt;
+    }
+
+    /** Gets a user from the database and populates it
+     *
+     * @param id of Organization to get
+     * @return Organization object
+     */
+    public Organization selectOrganization(int id) {
+        Organization tempOrg;
+        String selOrgQry = "SELECT * from " + ORGANIZATION_TABLE_NAME + " WHERE id = " + id + ";";
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selOrgQry, null);
+        c.moveToFirst();
+
+        tempOrg = new Organization(
+                c.getInt(c.getColumnIndex("id")),
+                c.getString(c.getColumnIndex("name")),
+                c.getString(c.getColumnIndex("description"))
+        );
+
+        tempOrg.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+        tempOrg.setName(c.getString(c.getColumnIndex("name")));
+        tempOrg.setDescription(c.getString(c.getColumnIndex("description")));
+        tempOrg.setAddress1(c.getString(c.getColumnIndex("address1")));
+        tempOrg.setAddress2(c.getString(c.getColumnIndex("address2")));
+        tempOrg.setCity(c.getString(c.getColumnIndex("city")));
+        tempOrg.setState(c.getString(c.getColumnIndex("state")));
+        tempOrg.setZipCode(c.getString(c.getColumnIndex("zipCode")));
+        tempOrg.setWebsiteLink(c.getString(c.getColumnIndex("websitelink")));
+        tempOrg.setLogoFileName(c.getString(c.getColumnIndex("logoFileName")));
+
+        db.close();
+        return tempOrg;
+    }
+
+    /** Get a list of Organizations from the database
+     *
+     * @param filter is a string with SQL WHERE conditions
+     * @return Arraylist of Organizations
+     */
+    public ArrayList<Organization> selectOrganizationArray(String filter) {
+        ArrayList<Organization> orgList = new ArrayList<>();
+        String selUserQry = "SELECT * from " + ORGANIZATION_TABLE_NAME + " WHERE " + filter + ";";
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selUserQry, null);
+        c.moveToFirst();
+
+        // Move through the results
+        while (!c.equals(null)) {
+            Organization tempOrg = new Organization(
+                    c.getInt(c.getColumnIndex("id")),
+                    c.getString(c.getColumnIndex("name")),
+                    c.getString(c.getColumnIndex("description"))
+            );
+
+            tempOrg.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+            tempOrg.setName(c.getString(c.getColumnIndex("name")));
+            tempOrg.setDescription(c.getString(c.getColumnIndex("description")));
+            tempOrg.setAddress1(c.getString(c.getColumnIndex("address1")));
+            tempOrg.setAddress2(c.getString(c.getColumnIndex("address2")));
+            tempOrg.setCity(c.getString(c.getColumnIndex("city")));
+            tempOrg.setState(c.getString(c.getColumnIndex("state")));
+            tempOrg.setZipCode(c.getString(c.getColumnIndex("zipCode")));
+            tempOrg.setWebsiteLink(c.getString(c.getColumnIndex("websiteLink")));
+            tempOrg.setLogoFileName(c.getString(c.getColumnIndex("logoFileName")));
+
+            orgList.add(tempOrg);
+        }
+
+        db.close();
+        return orgList;
+    }
 }
 

@@ -22,7 +22,7 @@ public class Group extends DatabaseEntity {
     protected Date created;
     protected int orgId;    // The organization id that this group belongs to
     protected boolean isActive = true;
-
+    /*TODO: Add a keyword string*/
 
     protected ArrayList members;
     protected ArrayList admins;
