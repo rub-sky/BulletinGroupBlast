@@ -16,7 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bulletingroupblast.bulletingroupblast.R;
-import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NewsListItem;
+import com.bulletingroupblast.bulletingroupblast.customListItems.NewsListItem;
 
 import java.util.ArrayList;
 

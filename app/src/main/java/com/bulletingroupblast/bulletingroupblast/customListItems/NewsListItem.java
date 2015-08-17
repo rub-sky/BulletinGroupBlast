@@ -6,7 +6,7 @@
  *
  */
 
-package com.bulletingroupblast.bulletingroupblast.customnavlistitem;
+package com.bulletingroupblast.bulletingroupblast.customListItems;
 
 /** This class is for the news list item fragment
  *

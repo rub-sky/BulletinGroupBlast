@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
-import com.bulletingroupblast.bulletingroupblast.customnavlistitem.NavListItemWithCounter;
+import com.bulletingroupblast.bulletingroupblast.customListItems.NavListItemWithCounter;
 
 import java.util.ArrayList;
 

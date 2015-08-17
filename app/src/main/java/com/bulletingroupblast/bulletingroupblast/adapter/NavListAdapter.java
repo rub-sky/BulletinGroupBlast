@@ -9,7 +9,7 @@ package com.bulletingroupblast.bulletingroupblast.adapter;
 
 
 import com.bulletingroupblast.bulletingroupblast.R;
-import com.bulletingroupblast.bulletingroupblast.customnavlistitem.*;
+import com.bulletingroupblast.bulletingroupblast.customListItems.*;
 import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;

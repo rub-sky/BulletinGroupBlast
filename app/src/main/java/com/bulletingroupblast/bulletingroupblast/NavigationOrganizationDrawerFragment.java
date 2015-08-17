@@ -11,7 +11,7 @@ package com.bulletingroupblast.bulletingroupblast;
 
 import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 import com.bulletingroupblast.bulletingroupblast.adapter.NavListAdapter;
-import com.bulletingroupblast.bulletingroupblast.customnavlistitem.*;
+import com.bulletingroupblast.bulletingroupblast.customListItems.*;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
