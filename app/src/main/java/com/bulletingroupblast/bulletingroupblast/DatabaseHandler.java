@@ -13,6 +13,7 @@ import android.database.*;
 import android.database.sqlite.*;
 import android.util.Log;
 
+import com.bulletingroupblast.bulletingroupblast.Entities.Group;
 import com.bulletingroupblast.bulletingroupblast.Entities.Organization;
 import com.bulletingroupblast.bulletingroupblast.Entities.User;
 
@@ -64,7 +65,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             GROUP_CHAT_TABLE_NAME
     };
 
-    private static String[] CREATE_TABLE_STRS;
+    private static String[] CREATE_TABLE_STRINGS;
 
 
     /** DEfault Constructor
@@ -75,7 +76,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         super(context, DB_NAME, null, DB_VERSION);
 
         // Create Strings
-        CREATE_TABLE_STRS = new String[] {
+        CREATE_TABLE_STRINGS = new String[] {
 //                createAnnouncementTable(),
 //                createCalendarEventTable(),
 //                createCategoryTable(),
@@ -414,7 +415,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             "VARCHAR(75)",
             "BOOLEAN DEFAULT 1"
     };*/
-    /** Create table string for User
+    /** Create table string for Organization
      * @return string
      */
     public String createOrganizationTable() {
@@ -432,6 +433,22 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                 "logoFileName   VARCHAR(75)         NOT NULL,\n" +
                 "isActive       BOOLEAN DEFAULT 1\n" +
                 ");";
+
+        /*CREATE TABLE [IF NOT EXISTS] "main"."/tblOrganization"
+(
+	"id"             INT PRIMARY KEY    AUTOINCREMENT NOT NULL,
+	"name"           VARCHAR(150)    NOT NULL,
+	"description"    VARCHAR(300)    NOT NULL,
+	"createDate"     DATETIME      NOT NULL,
+	"address1"       VARCHAR(100),
+	"address2"       VARCHAR(100),
+	"city"           VARCHAR(50),
+	"state"          VARCHAR(2),
+	"zipCode"        VARCHAR(9)          NOT NULL,
+	"websiteLink"    VARCHAR(150),
+	"logoFileName"   VARCHAR(75)         NOT NULL,
+	"isActive"       BOOLEAN DEFAULT 1
+)*/
     }
 
     /** Remove a user with a given id
@@ -488,6 +505,130 @@ public class DatabaseHandler extends SQLiteOpenHelper{
      */
     public ArrayList<Organization> selectOrganizationArray(String filter) {
         ArrayList<Organization> orgList = new ArrayList<>();
+         String selUserQry = "SELECT * from " + ORGANIZATION_TABLE_NAME + " WHERE " + filter + ";";
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selUserQry, null);
+        c.moveToFirst();
+
+        // Move through the results
+        while (!c.equals(null)) {
+            Organization tempOrg = new Organization(
+                    c.getInt(c.getColumnIndex("id")),
+                    c.getString(c.getColumnIndex("name")),
+                    c.getString(c.getColumnIndex("description"))
+            );
+
+            tempOrg.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+            tempOrg.setName(c.getString(c.getColumnIndex("name")));
+            tempOrg.setDescription(c.getString(c.getColumnIndex("description")));
+            tempOrg.setAddress1(c.getString(c.getColumnIndex("address1")));
+            tempOrg.setAddress2(c.getString(c.getColumnIndex("address2")));
+            tempOrg.setCity(c.getString(c.getColumnIndex("city")));
+            tempOrg.setState(c.getString(c.getColumnIndex("state")));
+            tempOrg.setZipCode(c.getString(c.getColumnIndex("zipCode")));
+            tempOrg.setWebsiteLink(c.getString(c.getColumnIndex("websiteLink")));
+            tempOrg.setLogoFileName(c.getString(c.getColumnIndex("logoFileName")));
+
+            orgList.add(tempOrg);
+        }
+
+        db.close();
+        return orgList;
+    }
+
+    /*protected final String[] TABLE_COL_NAMES = {
+            "id",
+            "name",
+            "description",
+            "categoryId",
+            "created",
+            "orgId",
+            "isActive"
+    };
+    protected final String[] TABLE_COL_TYPES = {
+            "INTEGER PRIMARY KEY",
+            "VARCHAR(150)",
+            "VARCHAR(300)",
+            "INTEGER",
+            "DATETIME",
+            "INTEGER",
+            "BOOLEAN DEFAULT 1"
+    };*/
+
+    /** Create table string for Organization
+     * @return string
+     */
+    public String createGroupTable() {
+        return "CREATE TABLE " + GROUP_TABLE_NAME + "(\n" +
+                "id             INT PRIMARY KEY     NOT NULL,\n" +
+                "name           VARCHAR(150)        NOT NULL,\n" +
+                "description    VARCHAR(300)        NOT NULL,\n" +
+                "categoryId     INT                 NOT NULL\n" +
+                "createDate     DATETIME            NOT NULL,\n" +
+                "orgId          INT                 NOT NULL,\n" +
+                "logoFileName   VARCHAR(75)         NOT NULL,\n" +
+                "isActive       BOOLEAN DEFAULT 1\n" +
+                ");";
+    }
+
+    /** Remove a user with a given id
+     * @param id of the user
+     * @return string
+     */
+    public int deleteGroup(int id) {
+        db = this.getWritableDatabase();
+        int cnt = db.delete(ORGANIZATION_TABLE_NAME, "id = " + id, null);
+        db.close();
+
+        return cnt;
+    }
+
+    /** Gets a user from the database and populates it
+     *
+     * @param id of Organization to get
+     * @return Organization object
+     */
+    public Group selectGroup(int id) {
+        Group tempGrp;
+        String selOrgQry = "SELECT * from " + ORGANIZATION_TABLE_NAME + " WHERE id = " + id + ";";
+
+        // Set up the database query
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selOrgQry, null);
+        c.moveToFirst();
+        //public Group(int grpId, int orgId, String name, String description, Category cat) {
+        tempGrp = new Group(
+                c.getInt(c.getColumnIndex("id")),
+                c.getInt(c.getColumnIndex("orgId")),
+                c.getString(c.getColumnIndex("name")),
+                c.getString(c.getColumnIndex("description")),
+                c.getInt(c.getColumnIndex("categoryId"))
+        );
+
+//        tempGrp.setIsActive(Boolean.parseBoolean(c.getString(c.getColumnIndex("isActive"))));
+//        tempGrp.setName(c.getString(c.getColumnIndex("name")));
+//        tempGrp.setDescription(c.getString(c.getColumnIndex("description")));
+//        tempGrp.setAddress1(c.getString(c.getColumnIndex("address1")));
+//        tempGrp.setAddress2(c.getString(c.getColumnIndex("address2")));
+//        tempGrp.setCity(c.getString(c.getColumnIndex("city")));
+//        tempGrp.setState(c.getString(c.getColumnIndex("state")));
+//        tempGrp.setZipCode(c.getString(c.getColumnIndex("zipCode")));
+//        tempGrp.setWebsiteLink(c.getString(c.getColumnIndex("websitelink")));
+//        tempGrp.setLogoFileName(c.getString(c.getColumnIndex("logoFileName")));
+
+        db.close();
+        return tempGrp;
+    }
+
+    /** Get a list of Organizations from the database
+     *
+     * @param filter is a string with SQL WHERE conditions
+     * @return Arraylist of Organizations
+     */
+    public ArrayList<Organization> selectGroupArray(String filter) {
+        ArrayList<Organization> orgList = new ArrayList<>();
         String selUserQry = "SELECT * from " + ORGANIZATION_TABLE_NAME + " WHERE " + filter + ";";
 
         // Set up the database query
@@ -520,5 +661,93 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close();
         return orgList;
     }
+
+    /*
+CREATE TABLE tbl_user (
+    "id" INT NOT NULL,
+    "email" VARCHAR(100) NOT NULL,
+    "password" VARCHAR(300) NOT NULL,
+    "salt" CHAR(50) NOT NULL,
+    "firstName" VARCHAR(100) NOT NULL,
+    "lastName" VARCHAR(100) NOT NULL,
+    "isActive" BOOLEAN DEFAULT (1),
+    "autoLogin" BOOLEAN DEFAULT (1),
+    "dateCreated" DATETIME NOT NULL,
+    "avatarFileName" TEXT
+);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE tbl_group (
+    "id" INTEGER NOT NULL,
+    "name" VARCHAR(150) NOT NULL,
+    "description" VARCHAR(300) NOT NULL,
+    "categoryId" INT NOT NULL,
+    "createDate" DATETIME NOT NULL,
+    "orgId" INT NOT NULL,
+    "logoFileName" VARCHAR(75) NOT NULL,
+    "isActive" BOOLEAN DEFAULT (1)
+, "adminId" INTEGER  NOT NULL  DEFAULT (0));
+CREATE TABLE tbl_organization (
+    "id" INT NOT NULL,
+    "name" VARCHAR(150) NOT NULL,
+    "description" VARCHAR(300) NOT NULL,
+    "createDate" DATETIME NOT NULL,
+    "address1" VARCHAR(100),
+    "address2" VARCHAR(100),
+    "city" VARCHAR(50),
+    "state" VARCHAR(2),
+    "zipCode" VARCHAR(9) NOT NULL,
+    "websiteLink" VARCHAR(150),
+    "logoFileName" VARCHAR(75) NOT NULL,
+    "isActive" BOOLEAN DEFAULT (1)
+, "adminId" INTEGER  NOT NULL  DEFAULT (0));
+CREATE TABLE "tbl_group_admins" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "groupId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL
+);
+CREATE TABLE "tbl_user_organizations" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "user_Id" INTEGER NOT NULL,
+    "org_Id" INTEGER NOT NULL
+);
+CREATE TABLE "tbl_user_groups" (
+    "Id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "user_Id" INTEGER NOT NULL,
+    "group_Id" INTEGER NOT NULL
+);
+CREATE TABLE "tbl_organization_groups" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "org_Id" INTEGER NOT NULL,
+    "group_Id" INTEGER NOT NULL
+);
+CREATE TABLE tbl_organization_admins (
+    "id" INTEGER NOT NULL,
+    "org_Id" INTEGER NOT NULL,
+    "user_Id" INTEGER NOT NULL
+);
+CREATE TABLE "tbl_category" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "org_Id" INTEGER NOT NULL,
+    "type" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "isActive" BOOLEAN true
+);
+CREATE TABLE "tbl_chat_messages" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    "chat_Id" INTEGER NOT NULL DEFAULT (0),
+    "user_Id" INTEGER NOT NULL DEFAULT (0),
+    "posted_date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "message" TEXT NOT NULL
+);
+CREATE TABLE tbl_chat (
+    "id" INTEGER NOT NULL,
+    "group_Id" INTEGER NOT NULL DEFAULT (0),
+    "initiator_Id" INTEGER NOT NULL DEFAULT (0),
+    "topic" TEXT NOT NULL,
+    "createdDate" DATETIME NOT NULL DEFAULT ('CURRENT_TIMESTAMP'),
+    "deleted" BOOLEAN NOT NULL DEFAULT ('FALSE')
+);
+    */
 }
 

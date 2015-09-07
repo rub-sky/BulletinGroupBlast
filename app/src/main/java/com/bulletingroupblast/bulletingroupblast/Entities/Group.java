@@ -21,6 +21,7 @@ public class Group extends DatabaseEntity {
     protected int categoryId;
     protected Date created;
     protected int orgId;    // The organization id that this group belongs to
+    protected int adminId;
     protected boolean isActive = true;
     /*TODO: Add a keyword string*/
 
@@ -90,6 +91,26 @@ public class Group extends DatabaseEntity {
         this.members = new ArrayList<User>();
     }
 
+    /** This is the default constructor for group class
+     * @param grpId group id
+     * @param orgId organization id string
+     * @param name string
+     * @param description string
+     * @param cat category id
+     */
+    public Group(int grpId, int orgId, String name, String description, int cat) {
+        super();
+
+        this.id = grpId;
+        this.orgId = orgId;
+        this.name = name;
+        this.description = description;
+        this.categoryId = cat;
+
+        /*TODO: Initialize members, admins, chat and announcement*/
+        this.admins = new ArrayList<User>();
+        this.members = new ArrayList<User>();
+    }
 
     /** Gets the name of the group
      * @return group name
@@ -167,7 +188,9 @@ public class Group extends DatabaseEntity {
      */
     public void addAdmin(User newAdmin) {
         /*TODO: Check if the User belongs to the Organization that this group belongs to*/
-        admins.add(newAdmin);
+        if ((newAdmin != null) && (admins != null)) {
+            admins.add(newAdmin);
+        }
     }
 
     /** Get the organization id that this group belongs to
@@ -183,6 +206,22 @@ public class Group extends DatabaseEntity {
      */
     public void setOrgId(int orgId) {
         this.orgId = orgId;
+    }
+
+    /** Gets the admin id of group
+     *
+     * @return int
+     */
+    public int getAdminId() {
+        return adminId;
+    }
+
+    /** Sets the admin id for group
+     *
+     * @param adminId int
+     */
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     /** Generate a value list to save into the database
