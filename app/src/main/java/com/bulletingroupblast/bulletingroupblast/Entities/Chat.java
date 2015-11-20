@@ -4,7 +4,7 @@
  * Please see the file LICENSE in this distribution for
  * license terms.
  *
- * Created by Ruben Piatnitsky on 7/21/15.
+ * Created by Ruben Piatnitsky
  */
 
 package com.bulletingroupblast.bulletingroupblast.Entities;

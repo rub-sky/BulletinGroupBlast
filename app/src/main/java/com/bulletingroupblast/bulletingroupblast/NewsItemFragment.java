@@ -91,10 +91,10 @@ public class NewsItemFragment extends Fragment implements AbsListView.OnItemClic
         // Sample News Items
         newsList.add(new NewsListItem(getString(R.string.news_item_sample_title),
                 getString(R.string.news_item_sample_desc)));
-        newsList.add(new NewsListItem(R.drawable.image1,
+        newsList.add(new NewsListItem(R.drawable.ic_account_balance,
                 getString(R.string.news_item_sample_title),
                 getString(R.string.news_item_sample_desc)));
-        newsList.add(new NewsListItem(R.drawable.image1,
+        newsList.add(new NewsListItem(R.drawable.ic_account_balance,
                 getString(R.string.news_item_sample_title),
                 getString(R.string.news_item_sample_desc)));
         newsList.add(new NewsListItem(getString(R.string.news_item_sample_title),

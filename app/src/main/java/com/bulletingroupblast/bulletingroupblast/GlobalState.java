@@ -174,15 +174,15 @@ public class GlobalState extends Application {
         testOrgs = new ArrayList<Organization>();
         testGroups = new ArrayList<Group>();
         testCategory = new ArrayList<Category>();
-        User primeUser = new User(testUsers.size()+1, "John.Doe@test.gmail.com","password","John", "Doe", R.drawable.image1);
+        User primeUser = new User(testUsers.size()+1, "John.Doe@test.gmail.com","password","John", "Doe", R.drawable.ic_face_dark);
         primeUser.setId(125);
 
         testUsers.add(primeUser);
-        testUsers.add(new User(testUsers.size()+1, "Amanda4Lang@test.gmail.com","password","Amanda", "Langley", R.drawable.image2));
-        testUsers.add(new User(testUsers.size()+1, "FrankHops@test.gmail.com","password","Frank", "Hops", R.drawable.image3));
-        testUsers.add(new User(testUsers.size()+1, "jane.b.Gerald@test.gmail.com","password","Jane", "Gerald", R.drawable.image4));
-        testUsers.add(new User(testUsers.size()+1, "joeshmoe@test.hotmail.com","password","Joe", "Hajk", R.drawable.image5));
-        testUsers.add(new User(testUsers.size()+1, "suzie@test.outlook.com","password","Sue", "Drake", R.drawable.image6));
+        testUsers.add(new User(testUsers.size()+1, "Amanda4Lang@test.gmail.com","password","Amanda", "Langley", R.drawable.ic_face_dark));
+        testUsers.add(new User(testUsers.size()+1, "FrankHops@test.gmail.com","password","Frank", "Hops", R.drawable.ic_face_dark));
+        testUsers.add(new User(testUsers.size()+1, "jane.b.Gerald@test.gmail.com","password","Jane", "Gerald", R.drawable.ic_face_dark));
+        testUsers.add(new User(testUsers.size()+1, "joeshmoe@test.hotmail.com","password","Joe", "Hajk", R.drawable.ic_face_dark));
+        testUsers.add(new User(testUsers.size()+1, "suzie@test.outlook.com","password","Sue", "Drake", R.drawable.ic_face_dark));
 
         userNameList = new String[testUsers.size()];
         userImageList = new Integer[testUsers.size()];

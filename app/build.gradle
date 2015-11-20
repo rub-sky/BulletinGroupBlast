@@ -24,4 +24,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.0'
+    compile files('/home/ruben/Documents/BulletinGroupBlast/libs/smack/smack-android-4.1.4-javadoc.jar')
+    compile files('/home/ruben/Documents/BulletinGroupBlast/libs/smack/smack-android-extensions-4.1.4-javadoc.jar')
 }
